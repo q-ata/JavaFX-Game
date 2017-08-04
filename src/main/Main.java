@@ -68,6 +68,7 @@ public class Main extends Application {
           }
           
           StateUpdate.update();
+          Render.draw();
           
         }
         
