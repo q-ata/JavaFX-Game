@@ -23,6 +23,7 @@ public class StateUpdate {
     for (Solid solid : solids) {
       
       if (protag.up && solid.y + solid.h >= protag.y && solid.y < protag.y + protag.h && solid.x < protag.x + protag.w && solid.x + solid.w > protag.x) {
+        
         int diff = (solid.y + solid.h) % protag.y;
         if (diff < 3) {
           protag.yVel = diff;
@@ -30,8 +31,10 @@ public class StateUpdate {
         else {
           protag.yVel = 0;
         }
+        
       }
       else if (protag.down && solid.y <= protag.y + protag.h && solid.y + solid.h > protag.y && solid.x < protag.x + protag.w && solid.x + solid.w > protag.x) {
+        
         int diff = (protag.y + protag.h) % solid.y;
         if (diff < 3) {
           protag.yVel = -diff;
@@ -39,9 +42,11 @@ public class StateUpdate {
         else {
           protag.yVel = 0;
         }
+        
       }
       
       else if (protag.right && solid.x <= protag.x + protag.w && solid.x + solid.w > protag.x && solid.y < protag.y + protag.h && solid.y + solid.h > protag.y) {
+        
         int diff = (protag.x + protag.w) % solid.x;
         if (diff < 3) {
           protag.xVel = -diff;
@@ -49,8 +54,10 @@ public class StateUpdate {
         else {
           protag.xVel = 0;
         }
+        
       }
       else if (protag.left && solid.x + solid.w >= protag.x && solid.x < protag.x + protag.w && solid.y < protag.y + protag.h && solid.y + solid.h > protag.y) {
+        
         int diff = (solid.x + solid.w) % protag.x;
         if (diff < 3) {
           protag.xVel = diff;
@@ -58,6 +65,7 @@ public class StateUpdate {
         else {
           protag.xVel = 0;
         }
+        
       }
       
     }

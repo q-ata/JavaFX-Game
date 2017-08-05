@@ -24,7 +24,7 @@ public class Render {
     ArrayList<Solid> visibleSolids = new ArrayList<Solid>();
     
     for (Solid solid : solids) {
-      if (solid.vx > -solid.w && solid.vx < 500) {
+      if (solid.vx > -solid.w && solid.vx < 800) {
         visibleSolids.add(solid);
       }
     }

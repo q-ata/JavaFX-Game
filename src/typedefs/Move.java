@@ -35,7 +35,7 @@ public abstract class Move {
     this.element = element;
   }
   
-  public abstract int getDamage();
-  public abstract int getHeal();
+  public abstract int getDamage(Stats charStats, Stats enemyStats);
+  public abstract int getHeal(Stats charStats, Stats enemyStats);
   
 }

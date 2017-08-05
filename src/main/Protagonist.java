@@ -1,18 +1,20 @@
 package main;
 
+import java.util.ArrayList;
+
+import moves.Ember;
+import moves.HeatWave;
+import moves.IronTail;
+import moves.Thunderbolt;
 import parents.Character;
+import parents.Pokemon;
+import pokemon.Pikachu;
 import typedefs.Coordinates;
+import typedefs.Move;
 import typedefs.Stats;
 
 public class Protagonist extends Character {
- 
-  public Protagonist(Coordinates coord) {
-    super(coord);
-    this.id = 0;
-    this.vx = 241;
-    this.vy = 237;
-  }
-
+  
   public boolean up = false;
   public boolean down = false;
   public boolean right = false;
@@ -30,7 +32,19 @@ public class Protagonist extends Character {
   private static String dir = "down";
   public static String spriteLocation = "file:resources/protag/protag_0.png";
   
+  private static ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
+  
   private static Stats stats = new Stats(new int[] {20, 18, 20, 15, 60, 15});
+ 
+  public Protagonist(Coordinates coord) {
+    
+    super(coord);
+    this.id = 0;
+    this.vx = 391;
+    this.vy = 237;
+    Protagonist.pokemons.add(new Pikachu(stats, new Move[] {new Ember(), new IronTail(), new Thunderbolt(), new HeatWave()}));
+    
+  }
   
   public void moveDirections() {
     if ((!up && !down && !left && !right) || frozen) {
@@ -80,6 +94,14 @@ public class Protagonist extends Character {
 
   public static void setStats(Stats stats) {
     Protagonist.stats = stats;
+  }
+
+  public static ArrayList<Pokemon> getPokemons() {
+    return pokemons;
+  }
+
+  public static void setPokemons(ArrayList<Pokemon> pokemons) {
+    Protagonist.pokemons = pokemons;
   }
 
 }

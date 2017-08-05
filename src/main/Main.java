@@ -3,7 +3,7 @@ package main;
 import java.io.File;
 import java.util.HashMap;
 
-import characters.Pikachu;
+import characters.PikachuEnemy;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -28,16 +28,15 @@ import typedefs.Coordinates;
 import typedefs.MapItem;
 import typedefs.Move;
 import typedefs.Solid;
-import typedefs.Stats;
 
 public class Main extends Application {
   
-  private static final Canvas canvas = new Canvas(500, 500);
+  private static final Canvas canvas = new Canvas(800, 500);
   private static final GraphicsContext gc = getCanvas().getGraphicsContext2D();
   
   private static HashMap<Integer, Character> entities = new HashMap<Integer, Character>();
   private static Enemy[] enemies = new Enemy[1];
-  private static Protagonist protagonist = new Protagonist(new Coordinates(241, 237));
+  private static Protagonist protagonist = new Protagonist(new Coordinates(391, 237));
   private static Solid[] solids = new Solid[1];
   
   private static MapItem[] mapItems = new MapItem[2];
@@ -56,16 +55,17 @@ public class Main extends Application {
   @Override
   public void start(Stage stage) {
     
+    
     Wall wall = new Wall(new Coordinates(300, 300));
     solids[0] = wall;
     HashMap<Integer, Move> pikachuMoves = new HashMap<Integer, Move>();
-    Stats pikachuStats = new Stats(new int[] {15, 15, 10, 10, 50, 10});
-    pikachuMoves.put(100, new Ember(pikachuStats, protagonist.getStats()));
-    Pikachu pikachu = new Pikachu(new Coordinates(120, 120), pikachuStats, pikachuMoves);
+    pikachuMoves.put(100, new Ember());
+    PikachuEnemy pikachu = new PikachuEnemy(new Coordinates(120, 120));
     enemies[0] = pikachu;
     
     mapItems[0] = wall;
     mapItems[1] = pikachu;
+    
     
     stage.setTitle("Definitely Not Pokemon");
     
@@ -99,6 +99,10 @@ public class Main extends Application {
           
           StateUpdate.update();
           Render.draw();
+          
+          if (protagonist.frozen) {
+            Battle.doBattle();
+          }
           
         }
         

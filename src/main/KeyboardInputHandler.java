@@ -11,18 +11,39 @@ public class KeyboardInputHandler {
     
     KeyCode key = event.getCode();
     
-    if (key.equals(KeyCode.W)) {
-      protag.up = true;
-    }
-    else if (key.equals(KeyCode.S)) {
-      protag.down = true;
+    if (!protag.frozen) {
+    
+      if (key.equals(KeyCode.W)) {
+        protag.up = true;
+      }
+      
+      else if (key.equals(KeyCode.S)) {
+        protag.down = true;
+      }
+      
+      if (key.equals(KeyCode.D)) {
+        protag.right = true;
+      }
+      else if (key.equals(KeyCode.A)) {
+        protag.left = true;
+      }
+      
     }
     
-    if (key.equals(KeyCode.D)) {
-      protag.right = true;
-    }
-    else if (key.equals(KeyCode.A)) {
-      protag.left = true;
+    else {
+      
+      if (key.equals(KeyCode.DOWN)) {
+        Battle.changeSelectedMove(0);
+      }
+      
+      else if (key.equals(KeyCode.UP)) {
+        Battle.changeSelectedMove(1);
+      }
+      
+      else if (key.equals(KeyCode.ENTER)) {
+        Battle.executeMove();
+      }
+      
     }
     
   }

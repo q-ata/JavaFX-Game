@@ -6,32 +6,26 @@ import typedefs.Move;
 import typedefs.Stats;
 
 public class Ember extends Move {
-  
-  private Stats stats;
-  private Stats estats;
 
-  public Ember(Stats charStats, Stats enemyStats) {
+  public Ember() {
     
     super("Ember", 1, new int[] {1}, new int[] {50});
     
-    this.stats = charStats;
-    this.estats = enemyStats;
-    
   }
   
-  public int getDamage() {
+  public int getDamage(Stats charStats, Stats enemyStats) {
     
-    double base = Math.sqrt(stats.level) + Math.sqrt(stats.atk);
-    double defense = Math.pow(estats.def, 0.47 + (estats.def/3.6/100));
+    double base = Math.sqrt(charStats.level) + Math.sqrt(charStats.atk);
+    double defense = Math.pow(enemyStats.def, 0.47 + (enemyStats.def/3.6/100));
     double elemental = 1;
     Random rand = new Random();
-    double variance = 0.95 + (1.05 - 0.95) * rand.nextDouble();
+    double variance = 0.7 + (1.3 - 0.7) * rand.nextDouble();
     
     return 10 + (int) Math.round((base - defense) * elemental * variance);
     
   }
   
-  public int getHeal() {
+  public int getHeal(Stats charStats, Stats enemyStats) {
     return 0;
   }
   
