@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 import typedefs.Solid;
 
 public class StateUpdate {
@@ -13,23 +15,6 @@ public class StateUpdate {
     
     for (Solid solid : solids) {
       
-      /*
-      if (solid.hitbox.intersects(protag.hitbox.getHeight(), protag.hitbox.getWidth(), protag.hitbox.getX(), protag.hitbox.getY())) {
-        System.out.println("collision");
-          if (protag.up) {
-            protag.y += 3;
-          }
-          else if (protag.down) {
-            protag.y += -3;
-          }
-          if (protag.right) {
-            protag.x += -3;
-          }
-          else if (protag.left) {
-            protag.x -= 3;
-          }
-      }
-      */
       if (protag.up && solid.y + solid.h >= protag.y && solid.y < protag.y + protag.h && solid.x < protag.x + protag.w && solid.x + solid.w > protag.x) {
         int diff = (solid.y + solid.h) % protag.y;
         if (diff < 3) {
@@ -66,6 +51,13 @@ public class StateUpdate {
         else {
           protag.xVel = 0;
         }
+      }
+      
+      if (protag.up || protag.down || protag.right || protag.left) {
+        Main.visibleX -= protag.xVel;
+        Main.visibleY -= protag.yVel;
+        solid.vx = Main.visibleX + solid.x;
+        solid.vy = Main.visibleY + solid.y;
       }
       
     }

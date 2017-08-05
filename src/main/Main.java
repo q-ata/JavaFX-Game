@@ -7,6 +7,8 @@ import java.util.HashMap;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.*;
@@ -34,6 +36,9 @@ public class Main extends Application {
   
   private static Media soundTrack = new Media(new File("./resources/soundtracks/main_soundtrack.mp3").toURI().toString());
   private static MediaPlayer soundtrackPlayer = new MediaPlayer(soundTrack);
+  
+  public static int visibleX = 0;
+  public static int visibleY = 0;
   
   public static long tick = 1;
   public static long lastFpsTime = 0;
@@ -85,6 +90,15 @@ public class Main extends Application {
     gameLoop.play();
     
     stage.show();
+    
+    stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+      @Override
+      public void changed(ObservableValue<? extends Boolean> ov, Boolean t1, Boolean t2) {
+        protagonist.up = protagonist.down = protagonist.right = protagonist.left = false;
+      }
+      
+    });
     
   }
   

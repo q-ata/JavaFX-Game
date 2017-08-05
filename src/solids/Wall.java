@@ -1,6 +1,5 @@
 package solids;
 
-import javafx.scene.shape.Rectangle;
 import typedefs.Coordinates;
 import typedefs.Solid;
 
@@ -14,8 +13,8 @@ public class Wall extends Solid {
     
     this.w = 30;
     this.h = 30;
-    
-    this.hitbox = new Rectangle(h, w, x, y);
+    this.vx = this.x;
+    this.vy = this.y;
     
   }
 

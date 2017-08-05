@@ -1,6 +1,5 @@
 package main;
 
-import javafx.scene.shape.Rectangle;
 import parents.Character;
 import typedefs.Coordinates;
 
@@ -9,6 +8,8 @@ public class Protagonist extends Character {
   public Protagonist(Coordinates coord) {
     super(coord);
     this.id = 0;
+    this.vx = 241;
+    this.vy = 237;
   }
 
   public boolean up = false;
@@ -18,8 +19,6 @@ public class Protagonist extends Character {
   
   public final int w = 18;
   public final int h = 26;
-  
-  public Rectangle hitbox = new Rectangle(h, w, x, y);
   
   public int xVel = 0;
   public int yVel = 0;
@@ -41,8 +40,6 @@ public class Protagonist extends Character {
     else {
       tick = 1;
     }
-    
-    hitbox = new Rectangle(h, w, x, y);
     
     if (up) {
       yVel = -3;
