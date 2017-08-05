@@ -8,6 +8,7 @@ import typedefs.Stats;
 
 public abstract class Enemy extends Character {
   
+  private String name;
   private int atk;
   private int def;
   private int sta;
@@ -15,13 +16,15 @@ public abstract class Enemy extends Character {
   private int health;
   private HashMap<Integer, Move> moves = new HashMap<Integer, Move>();
 
-  public Enemy(Coordinates coord, Stats stats) {
+  public Enemy(String name, Coordinates coord, Stats stats, HashMap<Integer, Move> availableMoves) {
     super(coord);
+    setName(name);
     setAtk(stats.atk);
     setDef(stats.def);
     setSta(stats.sta);
     setSpd(stats.spd);
     setHealth(stats.health);
+    setMoves(availableMoves);
   }
 
   public int getAtk() {
@@ -70,6 +73,14 @@ public abstract class Enemy extends Character {
 
   public void setMoves(HashMap<Integer, Move> moves) {
     this.moves = moves;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
 }

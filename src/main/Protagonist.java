@@ -2,6 +2,7 @@ package main;
 
 import parents.Character;
 import typedefs.Coordinates;
+import typedefs.Stats;
 
 public class Protagonist extends Character {
  
@@ -17,6 +18,8 @@ public class Protagonist extends Character {
   public boolean right = false;
   public boolean left = false;
   
+  public boolean frozen = false;
+  
   public final int w = 18;
   public final int h = 26;
   
@@ -27,8 +30,10 @@ public class Protagonist extends Character {
   private static String dir = "down";
   public static String spriteLocation = "file:resources/protag/protag_0.png";
   
+  private static Stats stats = new Stats(new int[] {20, 18, 20, 15, 60, 15});
+  
   public void moveDirections() {
-    if (!up && !down && !left && !right) {
+    if ((!up && !down && !left && !right) || frozen) {
       spriteLocation = "file:resources/protag/protag_" + dir + "_0.png";
       xVel = yVel = 0;
       return;
@@ -67,6 +72,14 @@ public class Protagonist extends Character {
       dir = "left";
     }
     
+  }
+
+  public Stats getStats() {
+    return stats;
+  }
+
+  public static void setStats(Stats stats) {
+    Protagonist.stats = stats;
   }
 
 }

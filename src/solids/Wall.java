@@ -13,8 +13,6 @@ public class Wall extends Solid {
     
     this.w = 30;
     this.h = 30;
-    this.vx = this.x;
-    this.vy = this.y;
     
   }
 

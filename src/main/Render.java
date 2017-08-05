@@ -1,23 +1,26 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import parents.Character;
+import parents.Enemy;
 import typedefs.Solid;
 
 public class Render {
   
   public static void draw() {
     
+    Protagonist protag = Main.getProtagonist();
+    if (protag.frozen) {
+      return;
+    }
+    
     Canvas canvas = Main.getCanvas();
     GraphicsContext gc = Main.getGc();
-    Protagonist protag = Main.getProtagonist();
-    HashMap<Integer, Character> entities = Main.getEntities();
     Solid[] solids = Main.getSolids();
+    Enemy[] enemies = Main.getEnemies();
     ArrayList<Solid> visibleSolids = new ArrayList<Solid>();
     
     for (Solid solid : solids) {
@@ -33,8 +36,8 @@ public class Render {
     
     gc.drawImage(protagSprite, protag.vx, protag.vy);
     
-    for (Character c : entities.values()) {
-      gc.drawImage(new Image(c.spriteLocation), c.x, c.y);
+    for (Enemy enemy : enemies) {
+      gc.drawImage(new Image(enemy.spriteLocation), enemy.vx, enemy.vy);
     }
     
     for (Solid item : visibleSolids) {

@@ -1,7 +1,8 @@
 package main;
 
-import java.util.ArrayList;
-
+import javafx.scene.media.MediaPlayer;
+import parents.Enemy;
+import typedefs.MapItem;
 import typedefs.Solid;
 
 public class StateUpdate {
@@ -9,7 +10,13 @@ public class StateUpdate {
   public static synchronized void update() {
     
     Protagonist protag = Main.getProtagonist();
+    
+    if (protag.frozen) {
+      return;
+    }
+    
     Solid[] solids = Main.getSolids();
+    Enemy[] enemies = Main.getEnemies();
     
     protag.moveDirections();
     
@@ -53,13 +60,24 @@ public class StateUpdate {
         }
       }
       
-      if (protag.up || protag.down || protag.right || protag.left) {
-        Main.visibleX -= protag.xVel;
-        Main.visibleY -= protag.yVel;
-        solid.vx = Main.visibleX + solid.x;
-        solid.vy = Main.visibleY + solid.y;
+    }
+    
+    for (Enemy enemy : enemies) {
+      if (protag.x < enemy.x + enemy.w && protag.x + protag.w > enemy.x && protag.y < enemy.y + enemy.h && protag.h + protag.y > enemy.y) {
+        Main.getSoundtrackPlayer().pause();
+        MediaPlayer initiateFightSoundPlayer = Main.getInitiateFightSoundPlayer();
+        initiateFightSoundPlayer.setVolume(0.2);
+        initiateFightSoundPlayer.setAutoPlay(true);
+        new Battle(protag, enemy);
       }
-      
+    }
+  
+    Main.visibleX -= protag.xVel;
+    Main.visibleY -= protag.yVel;
+    
+    for (MapItem item : Main.getMapItems()) {
+      item.vx = Main.visibleX + item.x;
+      item.vy = Main.visibleY + item.y;
     }
     
     protag.x += protag.xVel;
