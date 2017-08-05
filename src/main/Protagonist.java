@@ -1,5 +1,6 @@
 package main;
 
+import javafx.scene.shape.Rectangle;
 import parents.Character;
 import typedefs.Coordinates;
 
@@ -15,6 +16,14 @@ public class Protagonist extends Character {
   public boolean right = false;
   public boolean left = false;
   
+  public final int w = 18;
+  public final int h = 26;
+  
+  public Rectangle hitbox = new Rectangle(h, w, x, y);
+  
+  public int xVel = 0;
+  public int yVel = 0;
+  
   private static int tick = 1;
   private static String dir = "down";
   public static String spriteLocation = "file:resources/protag/protag_0.png";
@@ -22,6 +31,7 @@ public class Protagonist extends Character {
   public void moveDirections() {
     if (!up && !down && !left && !right) {
       spriteLocation = "file:resources/protag/protag_" + dir + "_0.png";
+      xVel = yVel = 0;
       return;
     }
     
@@ -32,24 +42,30 @@ public class Protagonist extends Character {
       tick = 1;
     }
     
+    hitbox = new Rectangle(h, w, x, y);
+    
     if (up) {
-      y -= 3;
+      yVel = -3;
+      xVel = 0;
       spriteLocation = "file:resources/protag/protag_up_" + String.valueOf(tick) + ".png";
       dir = "up";
     }
     else if (down) {
-      y += 3;
+      yVel = 3;
+      xVel = 0;
       spriteLocation = "file:resources/protag/protag_down_" + String.valueOf(tick) + ".png";
       dir = "down";
     }
     
     else if (right) {
-      x += 3;
+      xVel = 3;
+      yVel = 0;
       spriteLocation = "file:resources/protag/protag_right_" + String.valueOf(tick) + ".png";
       dir = "right";
     }
     else if (left) {
-      x -= 3;
+      xVel = -3;
+      yVel = 0;
       spriteLocation = "file:resources/protag/protag_left_" + String.valueOf(tick) + ".png";
       dir = "left";
     }

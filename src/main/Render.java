@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import parents.Character;
+import typedefs.Solid;
 
 public class Render {
   
@@ -16,6 +17,7 @@ public class Render {
     Protagonist protag = Main.getProtagonist();
     HashMap<Integer, Character> entities = Main.getEntities();
     
+    
     Image protagSprite = new Image(Protagonist.spriteLocation);
     
     gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -24,6 +26,10 @@ public class Render {
     
     for (Character c : entities.values()) {
       gc.drawImage(new Image(c.spriteLocation), c.x, c.y);
+    }
+    
+    for (Solid item : Main.getSolids()) {
+      gc.drawImage(new Image(item.spriteLocation), item.x, item.y);
     }
     
   }

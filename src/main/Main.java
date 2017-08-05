@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import parents.Character;
 import parents.Enemy;
+import solids.Wall;
 import typedefs.Coordinates;
+import typedefs.Solid;
 
 public class Main extends Application {
   
@@ -27,7 +29,8 @@ public class Main extends Application {
   
   private static HashMap<Integer, Character> entities = new HashMap<Integer, Character>();
   private static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-  private static Protagonist protagonist = new Protagonist(new Coordinates(0, 0));
+  private static Protagonist protagonist = new Protagonist(new Coordinates(241, 237));
+  private static Solid[] solids = new Solid[1];
   
   private static Media soundTrack = new Media(new File("./resources/soundtracks/main_soundtrack.mp3").toURI().toString());
   private static MediaPlayer soundtrackPlayer = new MediaPlayer(soundTrack);
@@ -37,6 +40,8 @@ public class Main extends Application {
 
   @Override
   public void start(Stage stage) {
+    
+    solids[0] = new Wall(new Coordinates(300, 300));
     
     stage.setTitle("A box.");
     
@@ -119,6 +124,14 @@ public class Main extends Application {
 
   public static void setEnemies(ArrayList<Enemy> enemies) {
     Main.enemies = enemies;
+  }
+
+  public static Solid[] getSolids() {
+    return solids;
+  }
+
+  public static void setSolids(Solid[] solids) {
+    Main.solids = solids;
   }
   
 }

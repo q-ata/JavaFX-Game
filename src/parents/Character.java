@@ -1,17 +1,14 @@
 package parents;
 
 import typedefs.Coordinates;
+import typedefs.MapItem;
 
-public abstract class Character {
+public abstract class Character extends MapItem {
   
-  public int x;
-  public int y;
   public int id;
-  public String spriteLocation;
   
-  public Character(Coordinates coord) {
-    this.x = coord.x;
-    this.y = coord.y;
+  public Character(Coordinates coords) {
+    super(coords);
   }
 
 }
