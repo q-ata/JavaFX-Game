@@ -29,11 +29,10 @@ public class Battle {
     Battle.enemy = enemy;
     
     GraphicsContext gc = Main.getGc();
-    Image stadium = new Image("file:resources/misc/stadium_grass.png");
     
     protag.frozen = true;
     
-    gc.drawImage(stadium, 0, 0, 800, 500);
+    gc.drawImage(Main.background, 0, 0, 800, 500);
     
     friendlyStarter = Protagonist.getPokemons().get(0);
     enemyStarter = enemy.getPokemons().get(0);
@@ -65,7 +64,7 @@ public class Battle {
     
   }
   
-  public synchronized static void doBattle() {
+  public static void doBattle() {
     
     return;
     

@@ -1,8 +1,12 @@
 package main;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import backdrops.Background;
 import characters.PikachuEnemy;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,26 +24,25 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import moves.Ember;
 import parents.Character;
 import parents.Enemy;
-import solids.Wall;
+import solids.Tree;
 import typedefs.Coordinates;
 import typedefs.MapItem;
-import typedefs.Move;
 import typedefs.Solid;
 
 public class Main extends Application {
   
   private static final Canvas canvas = new Canvas(800, 500);
   private static final GraphicsContext gc = getCanvas().getGraphicsContext2D();
+  public static final Image background = new Image("file:resources/misc/stadium_grass.png");
   
   private static HashMap<Integer, Character> entities = new HashMap<Integer, Character>();
-  private static Enemy[] enemies = new Enemy[1];
+  private static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   private static Protagonist protagonist = new Protagonist(new Coordinates(391, 237));
-  private static Solid[] solids = new Solid[1];
+  private static ArrayList<Solid> solids = new ArrayList<Solid>();
   
-  private static MapItem[] mapItems = new MapItem[2];
+  private static ArrayList<MapItem> mapItems = new ArrayList<MapItem>();
   
   private static Media soundTrack = new Media(new File("./resources/soundtracks/main_soundtrack.mp3").toURI().toString());
   private static MediaPlayer soundtrackPlayer = new MediaPlayer(soundTrack);
@@ -53,23 +56,50 @@ public class Main extends Application {
   public static long lastFpsTime = 0;
 
   @Override
-  public void start(Stage stage) {
+  public void start(Stage stage) throws Exception {
+    
+    BufferedReader mapReader = new BufferedReader(new FileReader("./resources/map/region1.txt"));
+    ArrayList<String> mapLines = new ArrayList<String>();
+    try {
+      String line = mapReader.readLine();
+      while (line != null) {
+        mapLines.add(line);
+        line = mapReader.readLine();
+      }
+    }
+    finally {
+      mapReader.close();
+    }
     
     
-    Wall wall = new Wall(new Coordinates(300, 300));
-    solids[0] = wall;
-    HashMap<Integer, Move> pikachuMoves = new HashMap<Integer, Move>();
-    pikachuMoves.put(100, new Ember());
-    PikachuEnemy pikachu = new PikachuEnemy(new Coordinates(120, 120));
-    enemies[0] = pikachu;
-    
-    mapItems[0] = wall;
-    mapItems[1] = pikachu;
-    
+    mapLines.forEach((line) -> {
+      String[] items = line.split(" ");
+      for (String item : items) {
+        String[] values = item.split("-");
+        int i = Integer.parseInt(values[0]);
+        int x = Integer.parseInt(values[1]);
+        int y = Integer.parseInt(values[2]);
+        Coordinates c = new Coordinates(x, y);
+        if (i == 0) {
+          Background bg = new Background(c);
+          mapItems.add(bg);
+        }
+        else if (i == 1) {
+          Tree tree = new Tree(c);
+          mapItems.add(tree);
+          solids.add(tree);
+        }
+        else if (i == 2) {
+          PikachuEnemy pika = new PikachuEnemy(c);
+          mapItems.add(pika);
+          enemies.add(pika);
+        }
+      }
+    });
     
     stage.setTitle("Definitely Not Pokemon");
     
-    gc.setFill(Color.rgb(106, 202, 163));
+    gc.setFill(Color.BLACK);
     
     Scene scene = new Scene(new Group(getCanvas()));
     scene.setOnKeyPressed((event) -> KeyboardInputHandler.keyPressed(event));
@@ -156,27 +186,27 @@ public class Main extends Application {
     Main.protagonist = protagonist;
   }
 
-  public static Enemy[] getEnemies() {
+  public static ArrayList<Enemy> getEnemies() {
     return enemies;
   }
 
-  public static void setEnemies(Enemy[] enemies) {
+  public static void setEnemies(ArrayList<Enemy> enemies) {
     Main.enemies = enemies;
   }
 
-  public static Solid[] getSolids() {
+  public static ArrayList<Solid> getSolids() {
     return solids;
   }
 
-  public static void setSolids(Solid[] solids) {
+  public static void setSolids(ArrayList<Solid> solids) {
     Main.solids = solids;
   }
 
-  public static MapItem[] getMapItems() {
+  public static ArrayList<MapItem> getMapItems() {
     return mapItems;
   }
 
-  public static void setMapItems(MapItem[] mapItems) {
+  public static void setMapItems(ArrayList<MapItem> mapItems) {
     Main.mapItems = mapItems;
   }
 

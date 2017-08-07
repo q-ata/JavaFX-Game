@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 import javafx.scene.media.MediaPlayer;
 import parents.Enemy;
 import typedefs.MapItem;
@@ -7,7 +9,7 @@ import typedefs.Solid;
 
 public class StateUpdate {
   
-  public static synchronized void update() {
+  public static void update() {
     
     Protagonist protag = Main.getProtagonist();
     
@@ -15,8 +17,8 @@ public class StateUpdate {
       return;
     }
     
-    Solid[] solids = Main.getSolids();
-    Enemy[] enemies = Main.getEnemies();
+    ArrayList<Solid> solids = Main.getSolids();
+    ArrayList<Enemy> enemies = Main.getEnemies();
     
     protag.moveDirections();
     
@@ -24,7 +26,7 @@ public class StateUpdate {
       
       if (protag.up && solid.y + solid.h >= protag.y && solid.y < protag.y + protag.h && solid.x < protag.x + protag.w && solid.x + solid.w > protag.x) {
         
-        int diff = (solid.y + solid.h) % protag.y;
+        int diff = protag.y == 0 ? (solid.y + solid.h) % 3 : (solid.y + solid.h) % protag.y;
         if (diff < 3) {
           protag.yVel = diff;
         }
@@ -35,7 +37,7 @@ public class StateUpdate {
       }
       else if (protag.down && solid.y <= protag.y + protag.h && solid.y + solid.h > protag.y && solid.x < protag.x + protag.w && solid.x + solid.w > protag.x) {
         
-        int diff = (protag.y + protag.h) % solid.y;
+        int diff = solid.y == 0 ? (protag.y + protag.h) % 3 : (protag.y + protag.h) % solid.y;
         if (diff < 3) {
           protag.yVel = -diff;
         }
@@ -47,7 +49,7 @@ public class StateUpdate {
       
       else if (protag.right && solid.x <= protag.x + protag.w && solid.x + solid.w > protag.x && solid.y < protag.y + protag.h && solid.y + solid.h > protag.y) {
         
-        int diff = (protag.x + protag.w) % solid.x;
+        int diff = solid.x == 0 ? (protag.x + protag.w) % 3 : (protag.x + protag.w) % solid.x;
         if (diff < 3) {
           protag.xVel = -diff;
         }
@@ -58,7 +60,7 @@ public class StateUpdate {
       }
       else if (protag.left && solid.x + solid.w >= protag.x && solid.x < protag.x + protag.w && solid.y < protag.y + protag.h && solid.y + solid.h > protag.y) {
         
-        int diff = (solid.x + solid.w) % protag.x;
+        int diff = protag.x == 0 ? (solid.x + solid.w) % 3 : (solid.x + solid.w) % protag.x;
         if (diff < 3) {
           protag.xVel = diff;
         }
@@ -79,6 +81,7 @@ public class StateUpdate {
         new Battle(protag, enemy);
       }
     }
+    
   
     Main.visibleX -= protag.xVel;
     Main.visibleY -= protag.yVel;

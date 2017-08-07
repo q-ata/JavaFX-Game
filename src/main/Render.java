@@ -1,12 +1,9 @@
 package main;
 
-import java.util.ArrayList;
-
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import parents.Enemy;
-import typedefs.Solid;
+import typedefs.MapItem;
 
 public class Render {
   
@@ -19,30 +16,17 @@ public class Render {
     
     Canvas canvas = Main.getCanvas();
     GraphicsContext gc = Main.getGc();
-    Solid[] solids = Main.getSolids();
-    Enemy[] enemies = Main.getEnemies();
-    ArrayList<Solid> visibleSolids = new ArrayList<Solid>();
-    
-    for (Solid solid : solids) {
-      if (solid.vx > -solid.w && solid.vx < 800) {
-        visibleSolids.add(solid);
-      }
-    }
-    
-    
     Image protagSprite = new Image(Protagonist.spriteLocation);
     
     gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     
-    gc.drawImage(protagSprite, protag.vx, protag.vy);
-    
-    for (Enemy enemy : enemies) {
-      gc.drawImage(new Image(enemy.spriteLocation), enemy.vx, enemy.vy);
-    }
-    
-    for (Solid item : visibleSolids) {
+    for (MapItem item : Main.getMapItems()) {
+      
       gc.drawImage(new Image(item.spriteLocation), item.vx, item.vy);
+      
     }
+    
+    gc.drawImage(protagSprite, protag.vx, protag.vy);
     
   }
 
