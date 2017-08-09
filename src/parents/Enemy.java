@@ -11,9 +11,9 @@ public abstract class Enemy extends Character {
   private ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
   private int[][] moveChances;
 
-  public Enemy(String enemyName, Coordinates coord, Pokemon[] pokemon, int[][] moveChances) {
+  public Enemy(String enemyName, Coordinates coord, Pokemon[] pokemon, int[][] moveChances, String s) {
     
-    super(coord);
+    super(coord, s);
     
     setEnemyName(enemyName);
     setPokemons(new ArrayList<>(Arrays.asList(pokemon)));

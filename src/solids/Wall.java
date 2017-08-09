@@ -7,9 +7,7 @@ public class Wall extends Solid {
   
   public Wall(Coordinates coords) {
     
-    super(coords);
-    
-    this.spriteLocation = "file:resources/solids/wall.png";
+    super(coords, "file:resources/solids/wall.png");
     
     this.w = 30;
     this.h = 30;

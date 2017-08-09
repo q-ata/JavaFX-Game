@@ -5,13 +5,12 @@ import typedefs.Coordinates;
 
 public class Background extends BackDrop {
 
-  public Background(Coordinates coords) {
+  public Background(Coordinates coords, String sprite) {
     
-    super(coords);
+    super(coords, sprite);
     
-    this.spriteLocation = "file:resources/misc/grass.png";
-    this.w = 100;
-    this.h = 100;
+    this.w = 3200;
+    this.h = 2000;
     
   }
 

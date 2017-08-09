@@ -37,9 +37,11 @@ public class Main extends Application {
   private static final GraphicsContext gc = getCanvas().getGraphicsContext2D();
   public static final Image background = new Image("file:resources/misc/stadium_grass.png");
   
+  public static Background bg;
+  
   private static HashMap<Integer, Character> entities = new HashMap<Integer, Character>();
   private static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-  private static Protagonist protagonist = new Protagonist(new Coordinates(391, 237));
+  private static Protagonist protagonist = new Protagonist(new Coordinates(0, 0));
   private static ArrayList<Solid> solids = new ArrayList<Solid>();
   
   private static ArrayList<MapItem> mapItems = new ArrayList<MapItem>();
@@ -49,8 +51,8 @@ public class Main extends Application {
   private static Media initiateFightSound = new Media(new File("./resources/soundtracks/initiate_fight.mp3").toURI().toString());
   private static MediaPlayer initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
   
-  public static int visibleX = 0;
-  public static int visibleY = 0;
+  public static int visibleX = 391;
+  public static int visibleY = 237;
   
   public static long tick = 1;
   public static long lastFpsTime = 0;
@@ -73,28 +75,22 @@ public class Main extends Application {
     
     
     mapLines.forEach((line) -> {
-      String[] items = line.split(" ");
-      for (String item : items) {
-        String[] values = item.split("-");
-        int i = Integer.parseInt(values[0]);
-        int x = Integer.parseInt(values[1]);
-        int y = Integer.parseInt(values[2]);
-        Coordinates c = new Coordinates(x, y);
-        if (i == 0) {
-          Background bg = new Background(c);
-          mapItems.add(bg);
-        }
-        else if (i == 1) {
-          Tree tree = new Tree(c);
+      
+      String d = line.split(" ")[1];
+      String[] data = d.split("\\|");
+      
+      if (line.startsWith("MAP ")) {
+        bg = new Background(new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2])), data[0]);
+      }
+      else if (line.startsWith("ITEM ")) {
+        int type = Integer.parseInt(data[0]);
+        if (type == 1) {
+          Tree tree = new Tree(new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2])));
           mapItems.add(tree);
           solids.add(tree);
         }
-        else if (i == 2) {
-          PikachuEnemy pika = new PikachuEnemy(c);
-          mapItems.add(pika);
-          enemies.add(pika);
-        }
       }
+      
     });
     
     stage.setTitle("Definitely Not Pokemon");

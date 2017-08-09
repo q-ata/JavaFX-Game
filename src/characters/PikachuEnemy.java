@@ -17,9 +17,8 @@ public class PikachuEnemy extends Enemy {
 
   public PikachuEnemy(Coordinates coords) {
     
-    super("Pikachu", coords, pokemons, new int[][] {{20, 80}});
+    super("Pikachu", coords, pokemons, new int[][] {{20, 80}}, "file:resources/characters/pikachu.png");
     
-    this.spriteLocation = "file:resources/characters/pikachu.png";
     this.w = this.h = 30;
     
   }

@@ -26,7 +26,18 @@ public class StateUpdate {
       
       if (protag.up && solid.y + solid.h >= protag.y && solid.y < protag.y + protag.h && solid.x < protag.x + protag.w && solid.x + solid.w > protag.x) {
         
-        int diff = protag.y == 0 ? (solid.y + solid.h) % 3 : (solid.y + solid.h) % protag.y;
+        int diff;
+        
+        int sum = protag.y < 0 ? Math.abs(protag.y) : solid.y + solid.h;
+        int divisor = protag.y < 0 ? Math.abs(solid.y + solid.h) : protag.y;
+        
+        if (sum == 0) {
+          diff = Math.abs(protag.y / 3);
+        }
+        else {
+          diff = divisor == 0 ? sum % 3 : sum % divisor;
+        }
+        
         if (diff < 3) {
           protag.yVel = diff;
         }
@@ -35,9 +46,20 @@ public class StateUpdate {
         }
         
       }
-      else if (protag.down && solid.y <= protag.y + protag.h && solid.y + solid.h > protag.y && solid.x < protag.x + protag.w && solid.x + solid.w > protag.x) {
+      else if (protag.down && solid.y < protag.y + protag.h + 3 && solid.y + solid.h > protag.y && solid.x < protag.x + protag.w && solid.x + solid.w > protag.x) {
         
-        int diff = solid.y == 0 ? (protag.y + protag.h) % 3 : (protag.y + protag.h) % solid.y;
+        int diff;
+        
+        int sum = protag.y < 0 ? Math.abs(solid.y) : protag.y + protag.h;
+        int divisor = protag.y < 0 ? Math.abs(protag.y + protag.h) : protag.y;
+        
+        if (sum == 0) {
+          diff = Math.abs(protag.y / 3);
+        }
+        else {
+          diff = divisor == 0 ? sum % 3 : sum % divisor;
+        }
+        
         if (diff < 3) {
           protag.yVel = -diff;
         }
@@ -47,9 +69,20 @@ public class StateUpdate {
         
       }
       
-      else if (protag.right && solid.x <= protag.x + protag.w && solid.x + solid.w > protag.x && solid.y < protag.y + protag.h && solid.y + solid.h > protag.y) {
+      else if (protag.right && solid.x < protag.x + protag.w + 3 && solid.x + solid.w > protag.x && solid.y < protag.y + protag.h && solid.y + solid.h > protag.y) {
         
-        int diff = solid.x == 0 ? (protag.x + protag.w) % 3 : (protag.x + protag.w) % solid.x;
+        int diff;
+        
+        int sum = protag.x < 0 ? Math.abs(solid.x) : protag.x + protag.w;
+        int divisor = protag.x < 0 ? Math.abs(protag.x + protag.w) : solid.x;
+        
+        if (sum == 0) {
+          diff = Math.abs(protag.x / 3);
+        }
+        else {
+          diff = divisor == 0 ? sum % 3 : sum % divisor;
+        }
+        
         if (diff < 3) {
           protag.xVel = -diff;
         }
@@ -58,9 +91,20 @@ public class StateUpdate {
         }
         
       }
-      else if (protag.left && solid.x + solid.w >= protag.x && solid.x < protag.x + protag.w && solid.y < protag.y + protag.h && solid.y + solid.h > protag.y) {
+      else if (protag.left && solid.x + solid.w + 3 > protag.x && solid.x < protag.x + protag.w && solid.y < protag.y + protag.h && solid.y + solid.h > protag.y) {
         
-        int diff = protag.x == 0 ? (solid.x + solid.w) % 3 : (solid.x + solid.w) % protag.x;
+        int diff;
+        
+        int sum = protag.x < 0 ? Math.abs(solid.x) : protag.x + protag.w;
+        int divisor = protag.x < 0 ? Math.abs(solid.x + solid.w) : protag.x;
+        
+        if (sum == 0) {
+          diff = Math.abs(protag.x / 3);
+        }
+        else {
+          diff = divisor == 0 ? sum % 3 : sum % divisor;
+        }
+        
         if (diff < 3) {
           protag.xVel = diff;
         }

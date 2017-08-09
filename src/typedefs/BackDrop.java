@@ -2,9 +2,9 @@ package typedefs;
 
 public abstract class BackDrop extends MapItem {
 
-  public BackDrop(Coordinates coords) {
+  public BackDrop(Coordinates coords, String s) {
     
-    super(coords);
+    super(coords, s);
     
   }
   

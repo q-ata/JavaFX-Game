@@ -22,8 +22,8 @@ public class Protagonist extends Character {
   
   public boolean frozen = false;
   
-  public final int w = 18;
-  public final int h = 26;
+  public final int w = 27;
+  public final int h = 40;
   
   public int xVel = 0;
   public int yVel = 0;
@@ -38,10 +38,9 @@ public class Protagonist extends Character {
  
   public Protagonist(Coordinates coord) {
     
-    super(coord);
+    super(coord, spriteLocation);
+    
     this.id = 0;
-    this.vx = 391;
-    this.vy = 237;
     Protagonist.pokemons.add(new Pikachu(stats, new Move[] {new Ember(), new IronTail(), new Thunderbolt(), new HeatWave()}));
     
   }

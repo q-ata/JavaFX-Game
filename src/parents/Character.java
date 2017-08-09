@@ -7,8 +7,10 @@ public abstract class Character extends MapItem {
   
   public int id;
   
-  public Character(Coordinates coords) {
-    super(coords);
+  public Character(Coordinates coords, String s) {
+    
+    super(coords, s);
+    
   }
 
 }
