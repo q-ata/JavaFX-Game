@@ -41,7 +41,7 @@ public class Main extends Application {
   
   private static HashMap<Integer, Character> entities = new HashMap<Integer, Character>();
   private static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-  private static Protagonist protagonist = new Protagonist(new Coordinates(0, 0));
+  private static Protagonist protagonist = new Protagonist(new Coordinates(1600, 1000));
   private static ArrayList<Solid> solids = new ArrayList<Solid>();
   
   private static ArrayList<MapItem> mapItems = new ArrayList<MapItem>();
@@ -51,8 +51,8 @@ public class Main extends Application {
   private static Media initiateFightSound = new Media(new File("./resources/soundtracks/initiate_fight.mp3").toURI().toString());
   private static MediaPlayer initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
   
-  public static int visibleX = 391;
-  public static int visibleY = 237;
+  public static int visibleX = 391 - 1600;
+  public static int visibleY = 237 - 1000;
   
   public static long tick = 1;
   public static long lastFpsTime = 0;
