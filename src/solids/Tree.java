@@ -10,7 +10,9 @@ public class Tree extends Solid {
     super(coords, "file:resources/solids/tree.png");
     
     this.w = 50;
-    this.h = 78;
+    this.h = 48;
+    this.offy = 30;
+    this.hity += this.offy;
     
   }
 

@@ -26,8 +26,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import parents.Character;
 import parents.Enemy;
+import solids.LargeHouse;
+import solids.SmallHouse;
 import solids.Tree;
 import typedefs.Coordinates;
+import typedefs.Grass;
 import typedefs.MapItem;
 import typedefs.Solid;
 
@@ -41,7 +44,7 @@ public class Main extends Application {
   
   private static HashMap<Integer, Character> entities = new HashMap<Integer, Character>();
   private static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-  private static Protagonist protagonist = new Protagonist(new Coordinates(1600, 1000));
+  private static Protagonist protagonist;
   private static ArrayList<Solid> solids = new ArrayList<Solid>();
   
   private static ArrayList<MapItem> mapItems = new ArrayList<MapItem>();
@@ -51,8 +54,8 @@ public class Main extends Application {
   private static Media initiateFightSound = new Media(new File("./resources/soundtracks/initiate_fight.mp3").toURI().toString());
   private static MediaPlayer initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
   
-  public static int visibleX = 391 - 1600;
-  public static int visibleY = 237 - 1000;
+  public static int visibleX = 391;
+  public static int visibleY = 237;
   
   public static long tick = 1;
   public static long lastFpsTime = 0;
@@ -76,18 +79,47 @@ public class Main extends Application {
     
     mapLines.forEach((line) -> {
       
+      if (line.startsWith("//")) {
+        return;
+      }
+      
       String d = line.split(" ")[1];
       String[] data = d.split("\\|");
+      Coordinates coords = new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
       
       if (line.startsWith("MAP ")) {
-        bg = new Background(new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2])), data[0]);
+        bg = new Background(coords, data[0]);
       }
+      
+      if (line.startsWith("PROTAG ")) {
+        Main.protagonist = new Protagonist(coords);
+        Main.visibleX -= coords.x;
+        Main.visibleY -= coords.y;
+        Main.protagonist.vx = 391;
+        Main.protagonist.vy = 237;
+        mapItems.add(Main.protagonist);
+      }
+      
       else if (line.startsWith("ITEM ")) {
         int type = Integer.parseInt(data[0]);
         if (type == 1) {
-          Tree tree = new Tree(new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2])));
+          Tree tree = new Tree(coords);
           mapItems.add(tree);
           solids.add(tree);
+        }
+        else if (type == 2) {
+          LargeHouse house = new LargeHouse(coords);
+          mapItems.add(house);
+          solids.add(house);
+        }
+        else if (type == 3) {
+          SmallHouse house = new SmallHouse(coords);
+          mapItems.add(house);
+          solids.add(house);
+        }
+        else if (type == 4) {
+          Grass grass = new Grass(coords);
+          mapItems.add(grass);
         }
       }
       

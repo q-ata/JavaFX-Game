@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
 import moves.Ember;
 import moves.HeatWave;
 import moves.IronTail;
@@ -47,7 +48,7 @@ public class Protagonist extends Character {
   
   public void moveDirections() {
     if ((!up && !down && !left && !right) || frozen) {
-      spriteLocation = "file:resources/protag/protag_" + dir + "_0.png";
+      this.sprite = new Image("file:resources/protag/protag_" + dir + "_0.png");
       xVel = yVel = 0;
       return;
     }
@@ -62,26 +63,26 @@ public class Protagonist extends Character {
     if (up) {
       yVel = -3;
       xVel = 0;
-      spriteLocation = "file:resources/protag/protag_up_" + String.valueOf(tick) + ".png";
+      this.sprite = new Image("file:resources/protag/protag_up_" + String.valueOf(tick) + ".png");
       dir = "up";
     }
     else if (down) {
       yVel = 3;
       xVel = 0;
-      spriteLocation = "file:resources/protag/protag_down_" + String.valueOf(tick) + ".png";
+      this.sprite = new Image("file:resources/protag/protag_down_" + String.valueOf(tick) + ".png");
       dir = "down";
     }
     
     else if (right) {
       xVel = 3;
       yVel = 0;
-      spriteLocation = "file:resources/protag/protag_right_" + String.valueOf(tick) + ".png";
+      this.sprite = new Image("file:resources/protag/protag_right_" + String.valueOf(tick) + ".png");
       dir = "right";
     }
     else if (left) {
       xVel = -3;
       yVel = 0;
-      spriteLocation = "file:resources/protag/protag_left_" + String.valueOf(tick) + ".png";
+      this.sprite = new Image("file:resources/protag/protag_left_" + String.valueOf(tick) + ".png");
       dir = "left";
     }
     
@@ -101,6 +102,13 @@ public class Protagonist extends Character {
 
   public static void setPokemons(ArrayList<Pokemon> pokemons) {
     Protagonist.pokemons = pokemons;
+  }
+
+  @Override
+  public void specialProperties() {
+    
+    return;
+    
   }
 
 }

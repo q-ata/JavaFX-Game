@@ -31,4 +31,11 @@ public class PikachuEnemy extends Enemy {
     this.coords = coords;
   }
 
+  @Override
+  public void specialProperties() {
+    
+    return;
+    
+  }
+
 }

@@ -21,5 +21,7 @@ public abstract class MapItem {
     this.sprite = new Image(spriteLocation);
     
   }
+  
+  public abstract void specialProperties();
 
 }

@@ -69,8 +69,6 @@ public class Render {
      dh - the destination rectangle's height.
     */
     
-    gc.drawImage(new Image(Protagonist.spriteLocation), 391, 237);
-    
   }
 
 }
