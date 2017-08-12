@@ -9,7 +9,7 @@ public class HeatWave extends Move {
 
   public HeatWave() {
     
-    super("Heat Wave", 1, new int[] {1}, new int[] {50});
+    super("Heat Wave", 1, new int[] {1}, new int[] {50}, 3, 90);
     
   }
   
@@ -19,9 +19,15 @@ public class HeatWave extends Move {
     double defense = Math.pow(enemyStats.def, 0.47 + (enemyStats.def/3.6/100));
     double elemental = 1;
     Random rand = new Random();
-    double variance = 0.95 + (1.05 - 0.95) * rand.nextDouble();
+    double variance = 0.75 + (1.25 - 0.75) * rand.nextDouble();
+    int hit = rand.nextInt(100) + 1;
     
-    return 10 + (int) Math.round((base - defense) * elemental * variance);
+    if (hit > this.getAcc()) {
+      this.setMiss(true);
+      return 0;
+    }
+    
+    return 18 + (int) Math.round((base - defense) * elemental * variance);
     
   }
   

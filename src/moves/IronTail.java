@@ -9,19 +9,25 @@ public class IronTail extends Move {
 
   public IronTail() {
     
-    super("Iron Tail", 1, new int[] {1}, new int[] {50});
+    super("Iron Tail", 1, new int[] {1}, new int[] {50}, 1, 100);
     
   }
   
   public int getDamage(Stats charStats, Stats enemyStats) {
     
     double base = Math.sqrt(charStats.level) + Math.sqrt(charStats.atk);
-    double defense = Math.pow(enemyStats.def, 0.47 + (enemyStats.def/3.6/100));
-    double elemental = 1;
+    double defense = Math.pow(enemyStats.def, 0.47 + (enemyStats.def/4/100));
+    double elemental = 2;
     Random rand = new Random();
-    double variance = 0.95 + (1.05 - 0.95) * rand.nextDouble();
+    double variance = 0.9 + (1.1 - 0.9) * rand.nextDouble();
+    int hit = rand.nextInt(100) + 1;
     
-    return 10 + (int) Math.round((base - defense) * elemental * variance);
+    if (hit > this.getAcc()) {
+      this.setMiss(true);
+      return 0;
+    }
+    
+    return 8 + (int) Math.round((base - defense) * elemental * variance);
     
   }
   

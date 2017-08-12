@@ -13,7 +13,7 @@ public class StateUpdate {
     
     Protagonist protag = Main.getProtagonist();
     
-    if (protag.frozen) {
+    if (protag.state != 0) {
       return;
     }
     

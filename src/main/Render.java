@@ -1,9 +1,7 @@
 package main;
 
 import backdrops.Background;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import typedefs.MapItem;
 
 public class Render {
@@ -11,11 +9,10 @@ public class Render {
   public static void draw() {
     
     Protagonist protag = Main.getProtagonist();
-    if (protag.frozen) {
+    if (protag.state != 0) {
       return;
     }
     
-    Canvas canvas = Main.getCanvas();
     GraphicsContext gc = Main.getGc();
     Background bg = Main.bg;
     

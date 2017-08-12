@@ -11,7 +11,7 @@ public class KeyboardInputHandler {
     
     KeyCode key = event.getCode();
     
-    if (!protag.frozen) {
+    if (protag.state == 0) {
     
       if (key.equals(KeyCode.W)) {
         protag.up = true;

@@ -21,7 +21,7 @@ public class Protagonist extends Character {
   public boolean right = false;
   public boolean left = false;
   
-  public boolean frozen = false;
+  public int state = 0;
   
   public final int w = 27;
   public final int h = 40;
@@ -47,7 +47,7 @@ public class Protagonist extends Character {
   }
   
   public void moveDirections() {
-    if ((!up && !down && !left && !right) || frozen) {
+    if ((!up && !down && !left && !right) || this.state != 0) {
       this.sprite = new Image("file:resources/protag/protag_" + dir + "_0.png");
       xVel = yVel = 0;
       return;

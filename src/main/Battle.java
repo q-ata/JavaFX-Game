@@ -30,7 +30,7 @@ public class Battle {
     
     GraphicsContext gc = Main.getGc();
     
-    protag.frozen = true;
+    protag.state = 1;
     
     gc.drawImage(Main.background, 0, 0, 800, 500);
     

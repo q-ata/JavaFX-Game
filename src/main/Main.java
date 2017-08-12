@@ -41,6 +41,7 @@ public class Main extends Application {
   public static final Image background = new Image("file:resources/misc/stadium_grass.png");
   
   public static Background bg;
+  public static String curRegion;
   
   private static HashMap<Integer, Character> entities = new HashMap<Integer, Character>();
   private static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -63,8 +64,41 @@ public class Main extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     
-    BufferedReader mapReader = new BufferedReader(new FileReader("./resources/map/region1.txt"));
+    BufferedReader saveReader = new BufferedReader(new FileReader("./resources/save.txt"));
+    ArrayList<String> saveLines = new ArrayList<String>();
+    
+    try {
+      String line = saveReader.readLine();
+      while (line != null) {
+        saveLines.add(line);
+        line = saveReader.readLine();
+      }
+    }
+    finally {
+      saveReader.close();
+    }
+    
+    saveLines.forEach((line) -> {
+      
+      String[] data = line.split(" ")[1].split("\\|");
+      
+      if (line.startsWith("AREA ")) {
+        int x = Integer.parseInt(data[1]);
+        int y = Integer.parseInt(data[2]);
+        Coordinates c = new Coordinates(x, y);
+        Main.protagonist = new Protagonist(c);
+        Main.visibleX -= c.x;
+        Main.visibleY -= c.y;
+        Main.protagonist.vx = 391;
+        Main.protagonist.vy = 237;
+        Main.curRegion = data[0];
+      }
+      
+    });
+    
+    BufferedReader mapReader = new BufferedReader(new FileReader("./resources/map/" + curRegion + ".txt"));
     ArrayList<String> mapLines = new ArrayList<String>();
+    
     try {
       String line = mapReader.readLine();
       while (line != null) {
@@ -75,7 +109,6 @@ public class Main extends Application {
     finally {
       mapReader.close();
     }
-    
     
     mapLines.forEach((line) -> {
       
@@ -92,11 +125,6 @@ public class Main extends Application {
       }
       
       if (line.startsWith("PROTAG ")) {
-        Main.protagonist = new Protagonist(coords);
-        Main.visibleX -= coords.x;
-        Main.visibleY -= coords.y;
-        Main.protagonist.vx = 391;
-        Main.protagonist.vy = 237;
         mapItems.add(Main.protagonist);
       }
       
@@ -120,6 +148,15 @@ public class Main extends Application {
         else if (type == 4) {
           Grass grass = new Grass(coords);
           mapItems.add(grass);
+        }
+      }
+      
+      else if (line.startsWith("ENEMY ")) {
+        int type = Integer.parseInt(data[0]);
+        if (type == 1) {
+          PikachuEnemy pika = new PikachuEnemy(coords);
+          mapItems.add(pika);
+          enemies.add(pika);
         }
       }
       
@@ -158,7 +195,7 @@ public class Main extends Application {
           StateUpdate.update();
           Render.draw();
           
-          if (protagonist.frozen) {
+          if (protagonist.state == 1) {
             Battle.doBattle();
           }
           
