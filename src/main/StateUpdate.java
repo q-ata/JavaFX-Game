@@ -1,10 +1,13 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import characters.PikachuEnemy;
 import javafx.scene.media.MediaPlayer;
 import parents.Enemy;
-import typedefs.MapItem;
+import typedefs.Coordinates;
+import typedefs.Grass;
 import typedefs.Solid;
 
 public class StateUpdate {
@@ -81,13 +84,37 @@ public class StateUpdate {
     Main.visibleX -= protag.xVel;
     Main.visibleY -= protag.yVel;
     
-    for (MapItem item : Main.getMapItems()) {
+    Main.getMapItems().forEach((item) -> {
       item.vx = Main.visibleX + item.x;
       item.vy = Main.visibleY + item.y;
-    }
+      item.specialProperties();
+      
+      if (item instanceof Grass) {
+        
+        if (Main.tick != 60 || Main.grassCheck || (!protag.down && !protag.up && !protag.right && !protag.left) || (item.x > protag.x + protag.w || item.x + item.w < protag.x || item.y > protag.y + protag.h || item.h + item.y < protag.y)) {
+          return;
+        }
+        
+        Main.grassCheck = true;
+        
+        Random rand = new Random();
+        
+        if (rand.nextDouble() < 0.9) {
+          return;
+        }
+        
+        Main.getSoundtrackPlayer().pause();
+        MediaPlayer initiateFightSoundPlayer = Main.getInitiateFightSoundPlayer();
+        initiateFightSoundPlayer.setVolume(0.2);
+        initiateFightSoundPlayer.setAutoPlay(true);
+        new Battle(protag, new PikachuEnemy(new Coordinates(protag.x, protag.y)));
+      }
+    });
     
     protag.x += protag.xVel;
     protag.y += protag.yVel;
+    
+    Main.grassCheck = false;
     
   }
   

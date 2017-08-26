@@ -55,6 +55,8 @@ public class Main extends Application {
   private static Media initiateFightSound = new Media(new File("./resources/soundtracks/initiate_fight.mp3").toURI().toString());
   private static MediaPlayer initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
   
+  public static boolean grassCheck = false;
+  
   public static int visibleX = 391;
   public static int visibleY = 237;
   

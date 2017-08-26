@@ -14,8 +14,6 @@ public class Grass extends MapItem {
   @Override
   public void specialProperties() {
     
-    // wild encounters & animation
-    
     return;
     
   }
