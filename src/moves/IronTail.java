@@ -27,7 +27,7 @@ public class IronTail extends Move {
       return 0;
     }
     
-    return 8 + (int) Math.round((base - defense) * elemental * variance);
+    return 12 + (int) Math.round((base - defense) * elemental * variance);
     
   }
   
