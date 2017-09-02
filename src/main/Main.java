@@ -1,7 +1,6 @@
 package main;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import characters.PikachuEnemy;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -36,9 +36,9 @@ import typedefs.Solid;
 
 public class Main extends Application {
   
-  private static final Canvas canvas = new Canvas(800, 500);
-  private static final GraphicsContext gc = getCanvas().getGraphicsContext2D();
-  public static final Image background = new Image("file:resources/misc/stadium_grass.png");
+  private static Canvas canvas;
+  private static GraphicsContext gc;
+  public static Image background;
   
   public static Background bg;
   public static String curRegion;
@@ -50,10 +50,10 @@ public class Main extends Application {
   
   private static ArrayList<MapItem> mapItems = new ArrayList<MapItem>();
   
-  private static Media soundTrack = new Media(new File("./resources/soundtracks/main_soundtrack.mp3").toURI().toString());
-  private static MediaPlayer soundtrackPlayer = new MediaPlayer(soundTrack);
-  private static Media initiateFightSound = new Media(new File("./resources/soundtracks/initiate_fight.mp3").toURI().toString());
-  private static MediaPlayer initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
+  private static Media soundTrack;
+  private static MediaPlayer soundtrackPlayer;
+  private static Media initiateFightSound;
+  private static MediaPlayer initiateFightSoundPlayer;
   
   public static boolean grassCheck = false;
   
@@ -66,7 +66,11 @@ public class Main extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     
-    BufferedReader saveReader = new BufferedReader(new FileReader("./resources/save.txt"));
+    canvas = new Canvas(800, 500);
+    gc = getCanvas().getGraphicsContext2D();
+    background = new Image("file:resources/misc/stadium_grass.png");
+
+    BufferedReader saveReader = new BufferedReader(new FileReader(getClass().getResource("/resources/save.txt").getPath()));
     ArrayList<String> saveLines = new ArrayList<String>();
     
     try {
@@ -172,10 +176,6 @@ public class Main extends Application {
     scene.setOnKeyPressed((event) -> KeyboardInputHandler.keyPressed(event));
     scene.setOnKeyReleased((event) -> KeyboardInputHandler.keyReleased(event));
     
-    getSoundtrackPlayer().setVolume(0.1);
-    getSoundtrackPlayer().setAutoPlay(true);
-    getSoundtrackPlayer().setOnEndOfMedia(() -> getSoundtrackPlayer().seek(Duration.ZERO));
-    
     stage.setScene(scene);
     stage.getIcons().add(new Image("file:resources/misc/pokeball.png"));
     
@@ -221,6 +221,16 @@ public class Main extends Application {
       
     });
     
+    Platform.runLater(() -> {
+      soundTrack = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/./resources/soundtracks/main_soundtrack.mp3");
+      initiateFightSound = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/./resources/soundtracks/initiate_fight.mp3");
+      soundtrackPlayer = new MediaPlayer(soundTrack);
+      initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
+      soundtrackPlayer.setVolume(0.1);
+      getSoundtrackPlayer().setAutoPlay(true);
+      getSoundtrackPlayer().setOnEndOfMedia(() -> getSoundtrackPlayer().seek(Duration.ZERO));
+    });
+    
   }
   
   public void stop() {
@@ -230,6 +240,7 @@ public class Main extends Application {
   public static void main(String[] args) {
     launch(args);
   }
+  
   public static Canvas getCanvas() {
     return canvas;
   }
