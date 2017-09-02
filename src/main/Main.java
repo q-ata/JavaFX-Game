@@ -1,7 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -69,8 +69,8 @@ public class Main extends Application {
     canvas = new Canvas(800, 500);
     gc = getCanvas().getGraphicsContext2D();
     background = new Image("file:resources/misc/stadium_grass.png");
-
-    BufferedReader saveReader = new BufferedReader(new FileReader(getClass().getResource("/resources/save.txt").getPath()));
+    
+    BufferedReader saveReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/save.txt")));
     ArrayList<String> saveLines = new ArrayList<String>();
     
     try {
@@ -102,7 +102,7 @@ public class Main extends Application {
       
     });
     
-    BufferedReader mapReader = new BufferedReader(new FileReader("./resources/map/" + curRegion + ".txt"));
+    BufferedReader mapReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/map/" + curRegion + ".txt")));
     ArrayList<String> mapLines = new ArrayList<String>();
     
     try {
@@ -222,8 +222,8 @@ public class Main extends Application {
     });
     
     Platform.runLater(() -> {
-      soundTrack = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/./resources/soundtracks/main_soundtrack.mp3");
-      initiateFightSound = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/./resources/soundtracks/initiate_fight.mp3");
+      soundTrack = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/resources/soundtracks/main_soundtrack.mp3");
+      initiateFightSound = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/resources/soundtracks/initiate_fight.mp3");
       soundtrackPlayer = new MediaPlayer(soundTrack);
       initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
       soundtrackPlayer.setVolume(0.1);

@@ -48,7 +48,7 @@ public class Protagonist extends Character {
   
   public void moveDirections() {
     if ((!up && !down && !left && !right) || this.state != 0) {
-      this.sprite = new Image("file:resources/protag/protag_" + dir + "_0.png");
+      this.sprite = new Image(getClass().getResource("/protag/protag_" + dir + "_0.png").toString());
       xVel = yVel = 0;
       return;
     }
