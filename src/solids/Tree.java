@@ -7,7 +7,7 @@ public class Tree extends Solid {
 
   public Tree(Coordinates coords) {
     
-    super(coords, "file:resources/solids/tree.png");
+    super(coords, "/solids/tree.png");
     
     this.w = 50;
     this.h = 48;

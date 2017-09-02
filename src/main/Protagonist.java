@@ -31,7 +31,7 @@ public class Protagonist extends Character {
   
   private static int tick = 1;
   private static String dir = "down";
-  public static String spriteLocation = "file:resources/protag/protag_0.png";
+  public static String spriteLocation = "/protag/protag_down_0.png";
   
   private static ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
   
@@ -63,26 +63,26 @@ public class Protagonist extends Character {
     if (up) {
       yVel = -3;
       xVel = 0;
-      this.sprite = new Image("file:resources/protag/protag_up_" + String.valueOf(tick) + ".png");
+      this.sprite = new Image("/protag/protag_up_" + String.valueOf(tick) + ".png");
       dir = "up";
     }
     else if (down) {
       yVel = 3;
       xVel = 0;
-      this.sprite = new Image("file:resources/protag/protag_down_" + String.valueOf(tick) + ".png");
+      this.sprite = new Image("/protag/protag_down_" + String.valueOf(tick) + ".png");
       dir = "down";
     }
     
     else if (right) {
       xVel = 3;
       yVel = 0;
-      this.sprite = new Image("file:resources/protag/protag_right_" + String.valueOf(tick) + ".png");
+      this.sprite = new Image("/protag/protag_right_" + String.valueOf(tick) + ".png");
       dir = "right";
     }
     else if (left) {
       xVel = -3;
       yVel = 0;
-      this.sprite = new Image("file:resources/protag/protag_left_" + String.valueOf(tick) + ".png");
+      this.sprite = new Image("/protag/protag_left_" + String.valueOf(tick) + ".png");
       dir = "left";
     }
     

@@ -1,4 +1,4 @@
-MAP file:resources/map/region1map.png|0|0
+MAP /map/region1map.png|0|0
 // Tall grass for encounters
 ITEM 4|2500|900
 ITEM 4|2532|900

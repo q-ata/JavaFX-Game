@@ -64,172 +64,180 @@ public class Main extends Application {
   public static long lastFpsTime = 0;
 
   @Override
-  public void start(Stage stage) throws Exception {
-    
-    canvas = new Canvas(800, 500);
-    gc = getCanvas().getGraphicsContext2D();
-    background = new Image("file:resources/misc/stadium_grass.png");
-    
-    BufferedReader saveReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/save.txt")));
-    ArrayList<String> saveLines = new ArrayList<String>();
+  public void start(Stage stage) {
     
     try {
-      String line = saveReader.readLine();
-      while (line != null) {
-        saveLines.add(line);
-        line = saveReader.readLine();
-      }
-    }
-    finally {
-      saveReader.close();
-    }
-    
-    saveLines.forEach((line) -> {
       
-      String[] data = line.split(" ")[1].split("\\|");
+      canvas = new Canvas(800, 500);
+      gc = getCanvas().getGraphicsContext2D();
+      background = new Image(getClass().getResource("/misc/stadium_grass.png").toString());
       
-      if (line.startsWith("AREA ")) {
-        int x = Integer.parseInt(data[1]);
-        int y = Integer.parseInt(data[2]);
-        Coordinates c = new Coordinates(x, y);
-        Main.protagonist = new Protagonist(c);
-        Main.visibleX -= c.x;
-        Main.visibleY -= c.y;
-        Main.protagonist.vx = 391;
-        Main.protagonist.vy = 237;
-        Main.curRegion = data[0];
-      }
+      BufferedReader saveReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/save.txt")));
+      ArrayList<String> saveLines = new ArrayList<String>();
       
-    });
-    
-    BufferedReader mapReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/map/" + curRegion + ".txt")));
-    ArrayList<String> mapLines = new ArrayList<String>();
-    
-    try {
-      String line = mapReader.readLine();
-      while (line != null) {
-        mapLines.add(line);
-        line = mapReader.readLine();
-      }
-    }
-    finally {
-      mapReader.close();
-    }
-    
-    mapLines.forEach((line) -> {
-      
-      if (line.startsWith("//")) {
-        return;
-      }
-      
-      String d = line.split(" ")[1];
-      String[] data = d.split("\\|");
-      Coordinates coords = new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
-      
-      if (line.startsWith("MAP ")) {
-        bg = new Background(coords, data[0]);
-      }
-      
-      if (line.startsWith("PROTAG ")) {
-        mapItems.add(Main.protagonist);
-      }
-      
-      else if (line.startsWith("ITEM ")) {
-        int type = Integer.parseInt(data[0]);
-        if (type == 1) {
-          Tree tree = new Tree(coords);
-          mapItems.add(tree);
-          solids.add(tree);
-        }
-        else if (type == 2) {
-          LargeHouse house = new LargeHouse(coords);
-          mapItems.add(house);
-          solids.add(house);
-        }
-        else if (type == 3) {
-          SmallHouse house = new SmallHouse(coords);
-          mapItems.add(house);
-          solids.add(house);
-        }
-        else if (type == 4) {
-          Grass grass = new Grass(coords);
-          mapItems.add(grass);
+      try {
+        String line = saveReader.readLine();
+        while (line != null) {
+          saveLines.add(line);
+          line = saveReader.readLine();
         }
       }
-      
-      else if (line.startsWith("ENEMY ")) {
-        int type = Integer.parseInt(data[0]);
-        if (type == 1) {
-          PikachuEnemy pika = new PikachuEnemy(coords);
-          mapItems.add(pika);
-          enemies.add(pika);
-        }
+      finally {
+        saveReader.close();
       }
       
-    });
-    
-    stage.setTitle("Definitely Not Pokemon");
-    
-    gc.setFill(Color.BLACK);
-    
-    Scene scene = new Scene(new Group(getCanvas()));
-    scene.setOnKeyPressed((event) -> KeyboardInputHandler.keyPressed(event));
-    scene.setOnKeyReleased((event) -> KeyboardInputHandler.keyReleased(event));
-    
-    stage.setScene(scene);
-    stage.getIcons().add(new Image("file:resources/misc/pokeball.png"));
-    
-    Timeline gameLoop = new Timeline();
-    gameLoop.setCycleCount(Timeline.INDEFINITE);
-    
-    KeyFrame keyframe = new KeyFrame(
+      saveLines.forEach((line) -> {
         
-      Duration.seconds(0.017),
-      
-      new EventHandler<ActionEvent>() {
+        String[] data = line.split(" ")[1].split("\\|");
         
-        public void handle(ActionEvent event) {
+        if (line.startsWith("AREA ")) {
+          int x = Integer.parseInt(data[1]);
+          int y = Integer.parseInt(data[2]);
+          Coordinates c = new Coordinates(x, y);
+          Main.protagonist = new Protagonist(c);
+          Main.visibleX -= c.x;
+          Main.visibleY -= c.y;
+          Main.protagonist.vx = 391;
+          Main.protagonist.vy = 237;
+          Main.curRegion = data[0];
+        }
+        
+      });
+      
+      BufferedReader mapReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/map/" + curRegion + ".txt")));
+      ArrayList<String> mapLines = new ArrayList<String>();
+      
+      try {
+        String line = mapReader.readLine();
+        while (line != null) {
+          mapLines.add(line);
+          line = mapReader.readLine();
+        }
+      }
+      finally {
+        mapReader.close();
+      }
+      
+      mapLines.forEach((line) -> {
+        
+        if (line.startsWith("//")) {
+          return;
+        }
+        
+        String d = line.split(" ")[1];
+        String[] data = d.split("\\|");
+        Coordinates coords = new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+        
+        if (line.startsWith("MAP ")) {
+          bg = new Background(coords, data[0]);
+        }
+        
+        if (line.startsWith("PROTAG ")) {
+          mapItems.add(Main.protagonist);
+        }
+        
+        else if (line.startsWith("ITEM ")) {
+          int type = Integer.parseInt(data[0]);
+          if (type == 1) {
+            Tree tree = new Tree(coords);
+            mapItems.add(tree);
+            solids.add(tree);
+          }
+          else if (type == 2) {
+            LargeHouse house = new LargeHouse(coords);
+            mapItems.add(house);
+            solids.add(house);
+          }
+          else if (type == 3) {
+            SmallHouse house = new SmallHouse(coords);
+            mapItems.add(house);
+            solids.add(house);
+          }
+          else if (type == 4) {
+            Grass grass = new Grass(coords);
+            mapItems.add(grass);
+          }
+        }
+        
+        else if (line.startsWith("ENEMY ")) {
+          int type = Integer.parseInt(data[0]);
+          if (type == 1) {
+            PikachuEnemy pika = new PikachuEnemy(coords);
+            mapItems.add(pika);
+            enemies.add(pika);
+          }
+        }
+        
+      });
+      
+      stage.setTitle("Definitely Not Pokemon");
+      
+      gc.setFill(Color.BLACK);
+      
+      Scene scene = new Scene(new Group(getCanvas()));
+      scene.setOnKeyPressed((event) -> KeyboardInputHandler.keyPressed(event));
+      scene.setOnKeyReleased((event) -> KeyboardInputHandler.keyReleased(event));
+      
+      stage.setScene(scene);
+      stage.getIcons().add(new Image("file:resources/misc/pokeball.png"));
+      
+      Timeline gameLoop = new Timeline();
+      gameLoop.setCycleCount(Timeline.INDEFINITE);
+      
+      KeyFrame keyframe = new KeyFrame(
           
-          if (++tick > 60) {
-            tick = 1;
+        Duration.seconds(0.017),
+        
+        new EventHandler<ActionEvent>() {
+          
+          public void handle(ActionEvent event) {
+            
+            if (++tick > 60) {
+              tick = 1;
+            }
+            
+            StateUpdate.update();
+            Render.draw();
+            
+            if (protagonist.state == 1) {
+              Battle.doBattle();
+            }
+            
           }
           
-          StateUpdate.update();
-          Render.draw();
-          
-          if (protagonist.state == 1) {
-            Battle.doBattle();
-          }
-          
         }
         
-      }
+      );
       
-    );
-    
-    gameLoop.getKeyFrames().add(keyframe);
-    gameLoop.play();
-    
-    stage.show();
-    
-    stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
-
-      @Override
-      public void changed(ObservableValue<? extends Boolean> ov, Boolean t1, Boolean t2) {
-        protagonist.up = protagonist.down = protagonist.right = protagonist.left = false;
-      }
+      gameLoop.getKeyFrames().add(keyframe);
+      gameLoop.play();
       
-    });
+      stage.show();
+      
+      stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+  
+        @Override
+        public void changed(ObservableValue<? extends Boolean> ov, Boolean t1, Boolean t2) {
+          protagonist.up = protagonist.down = protagonist.right = protagonist.left = false;
+        }
+        
+      });
+      
+      Platform.runLater(() -> {
+        soundTrack = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/resources/soundtracks/main_soundtrack.mp3");
+        initiateFightSound = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/resources/soundtracks/initiate_fight.mp3");
+        soundtrackPlayer = new MediaPlayer(soundTrack);
+        initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
+        soundtrackPlayer.setVolume(0.1);
+        getSoundtrackPlayer().setAutoPlay(true);
+        getSoundtrackPlayer().setOnEndOfMedia(() -> getSoundtrackPlayer().seek(Duration.ZERO));
+      });
+      
+    }
     
-    Platform.runLater(() -> {
-      soundTrack = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/resources/soundtracks/main_soundtrack.mp3");
-      initiateFightSound = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/resources/soundtracks/initiate_fight.mp3");
-      soundtrackPlayer = new MediaPlayer(soundTrack);
-      initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
-      soundtrackPlayer.setVolume(0.1);
-      getSoundtrackPlayer().setAutoPlay(true);
-      getSoundtrackPlayer().setOnEndOfMedia(() -> getSoundtrackPlayer().seek(Duration.ZERO));
-    });
+    catch(Exception e) {
+      e.printStackTrace();
+    }
     
   }
   

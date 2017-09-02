@@ -7,7 +7,7 @@ public class LargeHouse extends Solid {
 
   public LargeHouse(Coordinates coords) {
     
-    super(coords, "file:resources/buildings/largehouse.png");
+    super(coords, "/buildings/largehouse.png");
     
     this.w = 180;
     this.h = 144;
