@@ -1,9 +1,7 @@
 package parents;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import typedefs.Move;
 import typedefs.Stats;
 
 public class Pokemon {

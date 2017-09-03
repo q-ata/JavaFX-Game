@@ -238,8 +238,8 @@ public class Main extends Application {
       });
       
       Platform.runLater(() -> {
-        soundTrack = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/resources/soundtracks/main_soundtrack.mp3");
-        initiateFightSound = new Media("file:/E:/Users/Qatalyst/Java/JavaFX-Game/resources/soundtracks/initiate_fight.mp3");
+        soundTrack = new Media(getClass().getResource("/soundtracks/main_soundtrack.mp3").toExternalForm());
+        initiateFightSound = new Media(getClass().getResource("/soundtracks/initiate_fight.mp3").toExternalForm());
         soundtrackPlayer = new MediaPlayer(soundTrack);
         initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
         soundtrackPlayer.setVolume(0.1);
