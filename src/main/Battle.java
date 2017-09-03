@@ -2,6 +2,7 @@ package main;
 
 import java.util.Random;
 
+import data.MoveMap;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -39,10 +40,10 @@ public class Battle {
     String[] friendlyMoveNames = new String[friendlyStarter.getMoves().size()];
     String[] enemyMoveNames = new String[enemyStarter.getMoves().size()];
     for (int i = 0; i < friendlyStarter.getMoves().size(); i++) {
-      friendlyMoveNames[i] = friendlyStarter.getMoves().get(i).getName();
+      friendlyMoveNames[i] = MoveMap.MOVEMAP.get(friendlyStarter.getMoves().get(i)).getName();
     }
     for (int i = 0; i < enemyStarter.getMoves().size(); i++) {
-      enemyMoveNames[i] = enemyStarter.getMoves().get(i).getName();
+      enemyMoveNames[i] = MoveMap.MOVEMAP.get(enemyStarter.getMoves().get(i)).getName();
     }
     Text friendlyInfo = new Text("Level " + String.valueOf(friendlyStarter.getLevel()) + " " + friendlyStarter.getName() + "\n" + friendlyStarter.getHealth() + "HP " + friendlyStarter.getSta() + "STA\n" + String.join("\n", friendlyMoveNames));
     friendlyInfo.setFont(new Font(20));
@@ -60,7 +61,7 @@ public class Battle {
     gc.fillText(friendlyInfo.getText(), 191 - (friendlyHPWidth / 2), 345);
     gc.fillText(enemyInfo.getText(), 609 - (enemyHPWidth / 2), 345);
     
-    selectedMove = friendlyStarter.getMoves().get(selectedMoveIndex);
+    selectedMove = MoveMap.MOVEMAP.get(friendlyStarter.getMoves().get(selectedMoveIndex));
     
   }
   
@@ -73,11 +74,11 @@ public class Battle {
   public static void changeSelectedMove(int op) {
     
     if (op == 0 && selectedMoveIndex < friendlyStarter.getMoves().size() - 1) {
-      selectedMove = friendlyStarter.getMoves().get(++selectedMoveIndex);
+      selectedMove = MoveMap.MOVEMAP.get(friendlyStarter.getMoves().get(++selectedMoveIndex));
     }
     
     else if (op == 1 && selectedMoveIndex > 0) {
-      selectedMove = friendlyStarter.getMoves().get(--selectedMoveIndex);
+      selectedMove = MoveMap.MOVEMAP.get(friendlyStarter.getMoves().get(--selectedMoveIndex));
     }
     
     System.out.println("The selected move is now " + selectedMove.getName());
@@ -98,7 +99,7 @@ public class Battle {
     
     for (int i = 0; i < enemyMoveChances.length; i++) {
       for (int x = 0; x < enemyMoveChances[i]; x++) {
-        enemyMoveSet[counter] = enemyStarter.getMoves().get(i);
+        enemyMoveSet[counter] = MoveMap.MOVEMAP.get(enemyStarter.getMoves().get(i));
         counter++;
       }
     }

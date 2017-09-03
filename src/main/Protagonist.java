@@ -3,15 +3,9 @@ package main;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
-import moves.Ember;
-import moves.HeatWave;
-import moves.IronTail;
-import moves.Thunderbolt;
 import parents.Character;
 import parents.Pokemon;
-import pokemon.Pikachu;
 import typedefs.Coordinates;
-import typedefs.Move;
 import typedefs.Stats;
 
 public class Protagonist extends Character {
@@ -42,7 +36,6 @@ public class Protagonist extends Character {
     super(coord, spriteLocation);
     
     this.id = 0;
-    Protagonist.pokemons.add(new Pikachu(stats, new Move[] {new Ember(), new IronTail(), new Thunderbolt(), new HeatWave()}));
     
   }
   
@@ -102,6 +95,10 @@ public class Protagonist extends Character {
 
   public static void setPokemons(ArrayList<Pokemon> pokemons) {
     Protagonist.pokemons = pokemons;
+  }
+  
+  public static void addPokemon(Pokemon p) {
+    Protagonist.pokemons.add(p);
   }
 
   @Override

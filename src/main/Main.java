@@ -3,10 +3,12 @@ package main;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import backdrops.Background;
 import characters.PikachuEnemy;
+import data.CreatePokemon;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -33,6 +35,7 @@ import typedefs.Coordinates;
 import typedefs.Grass;
 import typedefs.MapItem;
 import typedefs.Solid;
+import typedefs.Stats;
 
 public class Main extends Application {
   
@@ -100,6 +103,17 @@ public class Main extends Application {
           Main.protagonist.vx = 391;
           Main.protagonist.vy = 237;
           Main.curRegion = data[0];
+        }
+        
+        else if (line.startsWith("POKEMON ")) {
+          int[] idata = new int[data.length];
+          for (int i = 0; i < data.length; i++) {
+            idata[i] = Integer.parseInt(data[i]);
+          }
+          int pokemon = idata[0];
+          Stats pStats = new Stats(new int[] {idata[1], idata[2], idata[3], idata[4], idata[5], idata[6]});
+          int[] moveset = Arrays.copyOfRange(idata, 7, data.length);
+          Protagonist.addPokemon(CreatePokemon.createPokemon(pokemon,  pStats, moveset));
         }
         
       });

@@ -15,12 +15,13 @@ public class Pokemon {
   private int spd;
   private int health;
   private int level;
-  private ArrayList<Move> moves = new ArrayList<Move>();
+  private int xp = 0;
+  private ArrayList<Integer> moves = new ArrayList<Integer>();
   private int type;
   private Stats stats;
   private String battleSprite;
   
-  public Pokemon(String name, Stats stats, Move[] moves, int type, String battleSprite) {
+  public Pokemon(String name, Stats stats, int[] moves, int type, String battleSprite) {
     
     setName(name);
     setAtk(stats.atk);
@@ -29,7 +30,9 @@ public class Pokemon {
     setSpd(stats.spd);
     setHealth(stats.health);
     setLevel(stats.level);
-    setMoves(new ArrayList<>(Arrays.asList(moves)));
+    for (int mIndex : moves) {
+      this.moves.add(mIndex);
+    }
     setType(type);
     setStats(stats);
     setBattleSprite(battleSprite);
@@ -80,11 +83,11 @@ public class Pokemon {
   public void setHealth(int health) {
     this.health = health;
   }
-  public ArrayList<Move> getMoves() {
+  public ArrayList<Integer> getMoves() {
     return moves;
   }
-  public void setMoves(ArrayList<Move> moves) {
-    this.moves = moves;
+  public void setMoves(ArrayList<Integer> arrayList) {
+    this.moves = arrayList;
   }
 
   public int getLevel() {
@@ -109,6 +112,14 @@ public class Pokemon {
 
   public void setBattleSprite(String battleSprite) {
     this.battleSprite = battleSprite;
+  }
+
+  public int getXp() {
+    return xp;
+  }
+
+  public void setXp(int xp) {
+    this.xp = xp;
   }
 
 }
