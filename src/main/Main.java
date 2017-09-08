@@ -237,15 +237,7 @@ public class Main extends Application {
         
       });
       
-      Platform.runLater(() -> {
-        soundTrack = new Media(getClass().getResource("/soundtracks/main_soundtrack.mp3").toExternalForm());
-        initiateFightSound = new Media(getClass().getResource("/soundtracks/initiate_fight.mp3").toExternalForm());
-        soundtrackPlayer = new MediaPlayer(soundTrack);
-        initiateFightSoundPlayer = new MediaPlayer(initiateFightSound);
-        soundtrackPlayer.setVolume(0.1);
-        getSoundtrackPlayer().setAutoPlay(true);
-        getSoundtrackPlayer().setOnEndOfMedia(() -> getSoundtrackPlayer().seek(Duration.ZERO));
-      });
+      Platform.runLater(new MusicPlayer());
       
     }
     
@@ -308,6 +300,14 @@ public class Main extends Application {
 
   public static void setMapItems(ArrayList<MapItem> mapItems) {
     Main.mapItems = mapItems;
+  }
+
+  public static Media getSoundTrack() {
+    return soundTrack;
+  }
+
+  public static void setSoundTrack(Media soundTrack) {
+    Main.soundTrack = soundTrack;
   }
 
   public static MediaPlayer getSoundtrackPlayer() {
