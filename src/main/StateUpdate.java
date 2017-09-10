@@ -23,8 +23,6 @@ public class StateUpdate {
     ArrayList<Solid> solids = Main.getSolids();
     ArrayList<Enemy> enemies = Main.getEnemies();
     
-    protag.moveDirections();
-    
     for (Solid solid : solids) {
       
       if (protag.up && solid.hity + solid.h >= protag.y && solid.hity < protag.y + protag.h && solid.hitx < protag.x + protag.w && solid.hitx + solid.w > protag.x) {

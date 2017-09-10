@@ -3,7 +3,6 @@ package main;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import parents.Character;
 import parents.Pokemon;
 import typedefs.CharacterSpriteMap;
@@ -31,6 +30,39 @@ public class Protagonist extends Character {
     
     super(coord, "/protag/protag_down_0.png", new CharacterSpriteMap(new String[] {"/protag/protag_DIR_1.png", "/protag/protag_DIR_0.png", "/protag/protag_DIR_2.png", "/protag/protag_DIR_0.png"}));
     
+  }
+  
+  public void setMovement(String dir) {
+    
+    this.active = true;
+    this.dir = dir;
+    
+    if (this.up) {
+      this.yVel = -this.speed;
+      this.xVel = 0;
+      this.sprite = this.getSpriteMap().up[0];
+    }
+    else if (this.down) {
+      this.yVel = this.speed;
+      this.xVel = 0;
+      this.sprite = this.getSpriteMap().down[0];
+    }
+    else if (this.right) {
+      this.xVel = this.speed;
+      this.yVel = 0;
+      this.sprite = this.getSpriteMap().right[0];
+    }
+    else if (this.left) {
+      this.xVel = -this.speed;
+      this.yVel = 0;
+      this.sprite = this.getSpriteMap().left[0];
+    }
+    
+  }
+  
+  public void stopMovement() {
+    this.sprite = new Image(getClass().getResource("/protag/protag_" + this.dir + "_0.png").toString());
+    this.xVel = this.yVel = 0;
   }
   
   public void moveDirections() {

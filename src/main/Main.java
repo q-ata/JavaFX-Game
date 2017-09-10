@@ -200,7 +200,7 @@ public class Main extends Application {
       
       KeyFrame keyframe = new KeyFrame(
           
-        Duration.seconds(0.017),
+        Duration.seconds(0.016),
         
         new EventHandler<ActionEvent>() {
           

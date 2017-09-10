@@ -13,19 +13,28 @@ public class KeyboardInputHandler {
 
     if (protag.state == 0) {
     
-      if (key.equals(KeyCode.W)) {
+      if (key.equals(KeyCode.W) && !protag.up) {
         protag.up = true;
+        protag.down = protag.right = protag.left = false;
+        protag.setMovement("up");
       }
       
-      else if (key.equals(KeyCode.S)) {
+      else if (key.equals(KeyCode.S) && !protag.down) {
         protag.down = true;
+        protag.up = protag.right = protag.left = false;
+        protag.setMovement("down");
       }
       
-      if (key.equals(KeyCode.D)) {
+      if (key.equals(KeyCode.D) && !protag.right) {
         protag.right = true;
+        protag.down = protag.up = protag.left = false;
+        protag.setMovement("right");
       }
-      else if (key.equals(KeyCode.A)) {
+      else if (key.equals(KeyCode.A) && !protag.left) {
+        System.out.println("a");
         protag.left = true;
+        protag.down = protag.right = protag.up = false;
+        protag.setMovement("left");
       }
       
     }
@@ -64,6 +73,11 @@ public class KeyboardInputHandler {
     }
     else if (key.equals(KeyCode.A)) {
       protag.left = false;
+    }
+    
+    if (!protag.up && !protag.down && !protag.right && !protag.left) {
+      protag.active = false;
+      protag.stopMovement();
     }
     
   }
