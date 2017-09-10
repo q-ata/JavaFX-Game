@@ -33,26 +33,9 @@ public class Protagonist extends Character {
     
   }
   
-  public void setMovement(KeyCode key) {
-    if (key.equals(KeyCode.W)) {
-      this.up = true;
-    }
-    
-    else if (key.equals(KeyCode.S)) {
-      this.down = true;
-    }
-    
-    if (key.equals(KeyCode.D)) {
-      this.right = true;
-    }
-    else if (key.equals(KeyCode.A)) {
-      this.left = true;
-    }
-  }
-  
   public void moveDirections() {
     if ((!up && !down && !left && !right) || this.state != 0) {
-      this.sprite = new Image(getClass().getResource("/protag/protag_" + dir + "_0.png").toString());
+      this.sprite = new Image(getClass().getResource("/protag/protag_" + this.dir + "_0.png").toString());
       xVel = yVel = 0;
       this.active = false;
       return;

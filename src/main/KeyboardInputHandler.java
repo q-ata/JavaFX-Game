@@ -13,7 +13,20 @@ public class KeyboardInputHandler {
 
     if (protag.state == 0) {
     
-      protag.setMovement(key);
+      if (key.equals(KeyCode.W)) {
+        protag.up = true;
+      }
+      
+      else if (key.equals(KeyCode.S)) {
+        protag.down = true;
+      }
+      
+      if (key.equals(KeyCode.D)) {
+        protag.right = true;
+      }
+      else if (key.equals(KeyCode.A)) {
+        protag.left = true;
+      }
       
     }
     
