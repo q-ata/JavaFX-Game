@@ -3,10 +3,11 @@ package main;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import parents.Character;
 import parents.Pokemon;
+import typedefs.CharacterSpriteMap;
 import typedefs.Coordinates;
-import typedefs.Stats;
 
 public class Protagonist extends Character {
   
@@ -22,71 +23,65 @@ public class Protagonist extends Character {
   
   public int xVel = 0;
   public int yVel = 0;
-  
-  private static int tick = 1;
-  private static String dir = "down";
-  public static String spriteLocation = "/protag/protag_down_0.png";
+  private int speed = 3;
   
   private static ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
-  
-  private static Stats stats = new Stats(new int[] {20, 18, 20, 15, 60, 15});
  
   public Protagonist(Coordinates coord) {
     
-    super(coord, spriteLocation);
+    super(coord, "/protag/protag_down_0.png", new CharacterSpriteMap(new String[] {"/protag/protag_DIR_1.png", "/protag/protag_DIR_0.png", "/protag/protag_DIR_2.png", "/protag/protag_DIR_0.png"}));
     
-    this.id = 0;
+  }
+  
+  public void setMovement(KeyCode key) {
+    if (key.equals(KeyCode.W)) {
+      this.up = true;
+    }
     
+    else if (key.equals(KeyCode.S)) {
+      this.down = true;
+    }
+    
+    if (key.equals(KeyCode.D)) {
+      this.right = true;
+    }
+    else if (key.equals(KeyCode.A)) {
+      this.left = true;
+    }
   }
   
   public void moveDirections() {
     if ((!up && !down && !left && !right) || this.state != 0) {
       this.sprite = new Image(getClass().getResource("/protag/protag_" + dir + "_0.png").toString());
       xVel = yVel = 0;
+      this.active = false;
       return;
     }
     
-    if (Main.tick < 15 || (Main.tick >= 30 && Main.tick < 45)) {
-      tick = 2;
-    }
-    else {
-      tick = 1;
-    }
+    this.active = true;
     
     if (up) {
-      yVel = -3;
+      yVel = -speed;
       xVel = 0;
-      this.sprite = new Image("/protag/protag_up_" + String.valueOf(tick) + ".png");
       dir = "up";
     }
     else if (down) {
-      yVel = 3;
+      yVel = speed;
       xVel = 0;
-      this.sprite = new Image("/protag/protag_down_" + String.valueOf(tick) + ".png");
       dir = "down";
     }
     
     else if (right) {
-      xVel = 3;
+      xVel = speed;
       yVel = 0;
-      this.sprite = new Image("/protag/protag_right_" + String.valueOf(tick) + ".png");
       dir = "right";
     }
     else if (left) {
-      xVel = -3;
+      xVel = -speed;
       yVel = 0;
-      this.sprite = new Image("/protag/protag_left_" + String.valueOf(tick) + ".png");
       dir = "left";
     }
     
-  }
-
-  public Stats getStats() {
-    return stats;
-  }
-
-  public static void setStats(Stats stats) {
-    Protagonist.stats = stats;
   }
 
   public static ArrayList<Pokemon> getPokemons() {

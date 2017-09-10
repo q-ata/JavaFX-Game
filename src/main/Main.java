@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
-import backdrops.Background;
 import characters.PikachuEnemy;
 import data.CreatePokemon;
 import javafx.animation.KeyFrame;
@@ -46,7 +44,7 @@ public class Main extends Application {
   public static Background bg;
   public static String curRegion;
   
-  private static HashMap<Integer, Character> entities = new HashMap<Integer, Character>();
+  private static ArrayList<Character> entities = new ArrayList<Character>();
   private static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   private static Protagonist protagonist;
   private static ArrayList<Solid> solids = new ArrayList<Solid>();
@@ -147,29 +145,30 @@ public class Main extends Application {
         }
         
         if (line.startsWith("PROTAG ")) {
-          mapItems.add(Main.protagonist);
+          Main.mapItems.add(Main.protagonist);
+          Main.entities.add(Main.protagonist);
         }
         
         else if (line.startsWith("ITEM ")) {
           int type = Integer.parseInt(data[0]);
           if (type == 1) {
             Tree tree = new Tree(coords);
-            mapItems.add(tree);
-            solids.add(tree);
+            Main.mapItems.add(tree);
+            Main.solids.add(tree);
           }
           else if (type == 2) {
             LargeHouse house = new LargeHouse(coords);
-            mapItems.add(house);
-            solids.add(house);
+            Main.mapItems.add(house);
+            Main.solids.add(house);
           }
           else if (type == 3) {
             SmallHouse house = new SmallHouse(coords);
-            mapItems.add(house);
-            solids.add(house);
+            Main.mapItems.add(house);
+            Main.solids.add(house);
           }
           else if (type == 4) {
             Grass grass = new Grass(coords);
-            mapItems.add(grass);
+            Main.mapItems.add(grass);
           }
         }
         
@@ -177,8 +176,9 @@ public class Main extends Application {
           int type = Integer.parseInt(data[0]);
           if (type == 1) {
             PikachuEnemy pika = new PikachuEnemy(coords);
-            mapItems.add(pika);
-            enemies.add(pika);
+            Main.mapItems.add(pika);
+            Main.enemies.add(pika);
+            // Main.entities.add(pika);
           }
         }
         
@@ -262,11 +262,11 @@ public class Main extends Application {
     return gc;
   }
 
-  public static HashMap<Integer, Character> getEntities() {
+  public static ArrayList<Character> getEntities() {
     return entities;
   }
 
-  public static void setEntities(HashMap<Integer, Character> entities) {
+  public static void setEntities(ArrayList<Character> entities) {
     Main.entities = entities;
   }
 

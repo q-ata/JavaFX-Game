@@ -1,10 +1,10 @@
-package backdrops;
+package main;
 
-import typedefs.BackDrop;
 import typedefs.Coordinates;
+import typedefs.MapItem;
 
-public class Background extends BackDrop {
-
+public class Background extends MapItem {
+  
   public Background(Coordinates coords, String sprite) {
     
     super(coords, sprite);

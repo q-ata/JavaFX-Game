@@ -1,6 +1,5 @@
 package main;
 
-import backdrops.Background;
 import javafx.scene.canvas.GraphicsContext;
 import typedefs.MapItem;
 

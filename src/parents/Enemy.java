@@ -3,6 +3,7 @@ package parents;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import typedefs.CharacterSpriteMap;
 import typedefs.Coordinates;
 
 public abstract class Enemy extends Character {
@@ -13,7 +14,7 @@ public abstract class Enemy extends Character {
 
   public Enemy(String enemyName, Coordinates coord, Pokemon[] pokemon, int[][] moveChances, String s) {
     
-    super(coord, s);
+    super(coord, s, new CharacterSpriteMap(new String[] {s}));
     
     setEnemyName(enemyName);
     setPokemons(new ArrayList<>(Arrays.asList(pokemon)));

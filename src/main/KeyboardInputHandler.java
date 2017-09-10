@@ -10,23 +10,10 @@ public class KeyboardInputHandler {
   public static void keyPressed(KeyEvent event) {
     
     KeyCode key = event.getCode();
-    
+
     if (protag.state == 0) {
     
-      if (key.equals(KeyCode.W)) {
-        protag.up = true;
-      }
-      
-      else if (key.equals(KeyCode.S)) {
-        protag.down = true;
-      }
-      
-      if (key.equals(KeyCode.D)) {
-        protag.right = true;
-      }
-      else if (key.equals(KeyCode.A)) {
-        protag.left = true;
-      }
+      protag.setMovement(key);
       
     }
     
