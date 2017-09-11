@@ -64,40 +64,6 @@ public class Protagonist extends Character {
     this.sprite = new Image(getClass().getResource("/protag/protag_" + this.dir + "_0.png").toString());
     this.xVel = this.yVel = 0;
   }
-  
-  public void moveDirections() {
-    if ((!up && !down && !left && !right) || this.state != 0) {
-      this.sprite = new Image(getClass().getResource("/protag/protag_" + this.dir + "_0.png").toString());
-      xVel = yVel = 0;
-      this.active = false;
-      return;
-    }
-    
-    this.active = true;
-    
-    if (up) {
-      yVel = -speed;
-      xVel = 0;
-      dir = "up";
-    }
-    else if (down) {
-      yVel = speed;
-      xVel = 0;
-      dir = "down";
-    }
-    
-    else if (right) {
-      xVel = speed;
-      yVel = 0;
-      dir = "right";
-    }
-    else if (left) {
-      xVel = -speed;
-      yVel = 0;
-      dir = "left";
-    }
-    
-  }
 
   public static ArrayList<Pokemon> getPokemons() {
     return pokemons;

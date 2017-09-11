@@ -31,7 +31,6 @@ public class KeyboardInputHandler {
         protag.setMovement("right");
       }
       else if (key.equals(KeyCode.A) && !protag.left) {
-        System.out.println("a");
         protag.left = true;
         protag.down = protag.right = protag.up = false;
         protag.setMovement("left");
