@@ -6,13 +6,13 @@ import parents.Character;
 
 import typedefs.CharacterSpriteMap;
 
-public class AdvanceAnimation extends TimerTask {
+public class AdvanceCharacterAnimation extends TimerTask {
   
   private Character c;
   private CharacterSpriteMap csm;
   private int cur = 1;
   
-  public AdvanceAnimation(Character ent) {
+  public AdvanceCharacterAnimation(Character ent) {
     
     this.c = ent;
     this.csm = this.c.getSpriteMap();

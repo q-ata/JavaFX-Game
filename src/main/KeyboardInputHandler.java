@@ -11,7 +11,7 @@ public class KeyboardInputHandler {
     
     KeyCode key = event.getCode();
 
-    if (protag.state == 0) {
+    if (protag.state == 1) {
     
       if (key.equals(KeyCode.W) && !protag.up) {
         protag.up = true;
@@ -38,7 +38,23 @@ public class KeyboardInputHandler {
       
     }
     
-    else {
+    else if (protag.state == 0) {
+      
+      if (key.equals(KeyCode.DOWN)) {
+        HandleTitle.incrementSelected(true);
+      }
+      
+      else if (key.equals(KeyCode.UP)) {
+        HandleTitle.incrementSelected(false);
+      }
+      
+      else if (key.equals(KeyCode.ENTER)) {
+        HandleTitle.select();
+      }
+      
+    }
+    
+    else if (protag.state == 3) {
       
       if (key.equals(KeyCode.DOWN)) {
         Battle.changeSelectedMove(0);

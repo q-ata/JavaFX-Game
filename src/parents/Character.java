@@ -2,7 +2,7 @@ package parents;
 
 import java.util.Timer;
 
-import main.AdvanceAnimation;
+import main.AdvanceCharacterAnimation;
 import typedefs.CharacterSpriteMap;
 import typedefs.Coordinates;
 import typedefs.MapItem;
@@ -20,7 +20,7 @@ public abstract class Character extends MapItem {
     
     setSpriteMap(spriteMap);
     this.animationTimer = new Timer();
-    this.animationTimer.scheduleAtFixedRate(new AdvanceAnimation(this), 0, 1000 / this.getSpriteMap().up.length);
+    this.animationTimer.scheduleAtFixedRate(new AdvanceCharacterAnimation(this), 0, 1000 / this.getSpriteMap().up.length);
     
   }
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import characters.PikachuEnemy;
-import javafx.scene.media.MediaPlayer;
 import parents.Enemy;
 import typedefs.Coordinates;
 import typedefs.Grass;
@@ -16,7 +15,7 @@ public class StateUpdate {
     
     Protagonist protag = Main.getProtagonist();
     
-    if (protag.state != 0) {
+    if (protag.state != 1) {
       return;
     }
     
@@ -70,10 +69,6 @@ public class StateUpdate {
     
     for (Enemy enemy : enemies) {
       if (protag.x < enemy.x + enemy.w && protag.x + protag.w > enemy.x && protag.y < enemy.y + enemy.h && protag.h + protag.y > enemy.y) {
-        Main.getSoundtrackPlayer().pause();
-        MediaPlayer initiateFightSoundPlayer = Main.getInitiateFightSoundPlayer();
-        initiateFightSoundPlayer.setVolume(0.2);
-        initiateFightSoundPlayer.setAutoPlay(true);
         new Battle(protag, enemy);
       }
     }
@@ -101,10 +96,6 @@ public class StateUpdate {
           return;
         }
         
-        Main.getSoundtrackPlayer().pause();
-        MediaPlayer initiateFightSoundPlayer = Main.getInitiateFightSoundPlayer();
-        initiateFightSoundPlayer.setVolume(0.2);
-        initiateFightSoundPlayer.setAutoPlay(true);
         new Battle(protag, new PikachuEnemy(new Coordinates(protag.x, protag.y)));
       }
     });

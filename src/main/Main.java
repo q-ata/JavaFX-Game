@@ -40,6 +40,9 @@ public class Main extends Application {
   private static Canvas canvas;
   private static GraphicsContext gc;
   public static Image background;
+  public static Image title;
+  public static Image continueButton;
+  public static Image exitButton;
   
   public static Background bg;
   public static String curRegion;
@@ -69,9 +72,12 @@ public class Main extends Application {
     
     try {
       
-      canvas = new Canvas(800, 500);
-      gc = getCanvas().getGraphicsContext2D();
-      background = new Image(getClass().getResource("/misc/stadium_grass.png").toString());
+      Main.canvas = new Canvas(800, 500);
+      Main.gc = getCanvas().getGraphicsContext2D();
+      Main.background = new Image(getClass().getResource("/misc/stadium_grass.png").toString());
+      Main.title = new Image(getClass().getResource("/title/base_title.png").toString());
+      Main.continueButton = new Image(getClass().getResource("/title/continue_button.png").toString());
+      Main.exitButton = new Image(getClass().getResource("/title/exit_button.png").toString());
       
       BufferedReader saveReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/save.txt")));
       ArrayList<String> saveLines = new ArrayList<String>();
@@ -186,7 +192,7 @@ public class Main extends Application {
       
       stage.setTitle("Definitely Not Pokemon");
       
-      gc.setFill(Color.BLACK);
+      Main.gc.setFill(Color.AQUA);
       
       Scene scene = new Scene(new Group(getCanvas()));
       scene.setOnKeyPressed((event) -> KeyboardInputHandler.keyPressed(event));
@@ -206,15 +212,27 @@ public class Main extends Application {
           
           public void handle(ActionEvent event) {
             
-            if (++tick > 60) {
-              tick = 1;
+            if (protagonist.state == 0) {
+              // title screen
+              Render.drawTitleScreen();
+            }
+            else if (protagonist.state == 1) {
+              // free roam
+              StateUpdate.update();
+              Render.draw();
+              
+            }
+            else if (protagonist.state == 2) {
+              // dialogue
+              
+            }
+            else if (protagonist.state == 3) {
+              // battle
+              
             }
             
-            StateUpdate.update();
-            Render.draw();
-            
-            if (protagonist.state == 1) {
-              Battle.doBattle();
+            if (++tick > 60) {
+              tick = 1;
             }
             
           }

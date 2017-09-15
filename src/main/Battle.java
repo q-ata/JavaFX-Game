@@ -5,6 +5,7 @@ import java.util.Random;
 import data.MoveMap;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -26,12 +27,16 @@ public class Battle {
   private static Enemy enemy;
   
   public Battle(Protagonist protag, Enemy enemy) {
-    
+      
     Battle.enemy = enemy;
     
     GraphicsContext gc = Main.getGc();
     
-    protag.state = 1;
+    protag.state = 3;
+    Main.getSoundtrackPlayer().pause();
+    MediaPlayer initiateFightSoundPlayer = Main.getInitiateFightSoundPlayer();
+    initiateFightSoundPlayer.setVolume(0.2);
+    initiateFightSoundPlayer.setAutoPlay(true);
     
     gc.drawImage(Main.background, 0, 0, 800, 500);
     
