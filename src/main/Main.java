@@ -93,7 +93,7 @@ public class Main extends Application {
         saveReader.close();
       }
       
-      saveLines.forEach((line) -> {
+      for (String line : saveLines) {
         
         String[] data = line.split(" ")[1].split("\\|");
         
@@ -120,7 +120,7 @@ public class Main extends Application {
           Protagonist.addPokemon(CreatePokemon.createPokemon(pokemon,  pStats, moveset));
         }
         
-      });
+      }
       
       BufferedReader mapReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/map/" + curRegion + ".txt")));
       ArrayList<String> mapLines = new ArrayList<String>();
@@ -136,67 +136,67 @@ public class Main extends Application {
         mapReader.close();
       }
       
-      mapLines.forEach((line) -> {
+      for (String line : mapLines) {
         
-        if (line.startsWith("//")) {
-          return;
+        if (!line.startsWith("//")) {
+        
+          String d = line.split(" ")[1];
+          String[] data = d.split("\\|");
+          Coordinates coords = new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+          
+          if (line.startsWith("MAP ")) {
+            bg = new Background(coords, data[0]);
+          }
+          
+          if (line.startsWith("PROTAG ")) {
+            Main.mapItems.add(Main.protagonist);
+            Main.entities.add(Main.protagonist);
+          }
+          
+          else if (line.startsWith("ITEM ")) {
+            int type = Integer.parseInt(data[0]);
+            if (type == 1) {
+              Tree tree = new Tree(coords);
+              Main.mapItems.add(tree);
+              Main.solids.add(tree);
+            }
+            else if (type == 2) {
+              LargeHouse house = new LargeHouse(coords);
+              Main.mapItems.add(house);
+              Main.solids.add(house);
+            }
+            else if (type == 3) {
+              SmallHouse house = new SmallHouse(coords);
+              Main.mapItems.add(house);
+              Main.solids.add(house);
+            }
+            else if (type == 4) {
+              Grass grass = new Grass(coords);
+              Main.mapItems.add(grass);
+            }
+          }
+          
+          else if (line.startsWith("ENEMY ")) {
+            int type = Integer.parseInt(data[0]);
+            if (type == 1) {
+              PikachuEnemy pika = new PikachuEnemy(coords);
+              Main.mapItems.add(pika);
+              Main.enemies.add(pika);
+              // Main.entities.add(pika);
+            }
+          }
+          
         }
         
-        String d = line.split(" ")[1];
-        String[] data = d.split("\\|");
-        Coordinates coords = new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
-        
-        if (line.startsWith("MAP ")) {
-          bg = new Background(coords, data[0]);
-        }
-        
-        if (line.startsWith("PROTAG ")) {
-          Main.mapItems.add(Main.protagonist);
-          Main.entities.add(Main.protagonist);
-        }
-        
-        else if (line.startsWith("ITEM ")) {
-          int type = Integer.parseInt(data[0]);
-          if (type == 1) {
-            Tree tree = new Tree(coords);
-            Main.mapItems.add(tree);
-            Main.solids.add(tree);
-          }
-          else if (type == 2) {
-            LargeHouse house = new LargeHouse(coords);
-            Main.mapItems.add(house);
-            Main.solids.add(house);
-          }
-          else if (type == 3) {
-            SmallHouse house = new SmallHouse(coords);
-            Main.mapItems.add(house);
-            Main.solids.add(house);
-          }
-          else if (type == 4) {
-            Grass grass = new Grass(coords);
-            Main.mapItems.add(grass);
-          }
-        }
-        
-        else if (line.startsWith("ENEMY ")) {
-          int type = Integer.parseInt(data[0]);
-          if (type == 1) {
-            PikachuEnemy pika = new PikachuEnemy(coords);
-            Main.mapItems.add(pika);
-            Main.enemies.add(pika);
-            // Main.entities.add(pika);
-          }
-        }
-        
-      });
+      }
       
       stage.setTitle("Definitely Not Pokemon");
       
       Main.gc.setFill(Color.AQUA);
       
       Scene scene = new Scene(new Group(getCanvas()));
-      scene.setOnKeyPressed((event) -> KeyboardInputHandler.keyPressed(event));
-      scene.setOnKeyReleased((event) -> KeyboardInputHandler.keyReleased(event));
+      scene.setOnKeyPressed(new KeyboardPressedHandler());
+      scene.setOnKeyReleased(new KeyboardReleasedHandler());
       
       stage.setScene(scene);
       stage.getIcons().add(new Image("file:resources/misc/pokeball.png"));
